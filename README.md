@@ -4,8 +4,8 @@
 
 <br>
 
-[![İndir](https://img.shields.io/github/v/release/AIacran/alacran-tweaking-tool?label=%C4%B0ndir&style=for-the-badge&color=880202)](https://github.com/AIacran/alacran-tweaking-tool/releases/latest)
-[![İndirme](https://img.shields.io/github/downloads/AIacran/alacran-tweaking-tool/total?label=%C4%B0ndirme&style=for-the-badge&color=b8860b)](https://github.com/AIacran/alacran-tweaking-tool/releases)
+[![İndir](https://img.shields.io/github/v/release/alacran-8/alacran-tweaking-tool?label=%C4%B0ndir&style=for-the-badge&color=880202)](https://github.com/alacran-8/alacran-tweaking-tool/releases/latest)
+[![İndirme](https://img.shields.io/github/downloads/alacran-8/alacran-tweaking-tool/total?label=%C4%B0ndirme&style=for-the-badge&color=b8860b)](https://github.com/alacran-8/alacran-tweaking-tool/releases)
 [![Lisans](https://img.shields.io/badge/Lisans-MIT-2b2b2b?style=for-the-badge)](LICENSE)
 
 **Türkçe** · [English](#-english)
@@ -72,7 +72,7 @@ SFC, DISM, DNS temizleme, Winsock sıfırlama gibi onarım araçları tek tıkla
 
 ## 🚀 Nasıl kullanılır?
 
-1. **[Releases](https://github.com/AIacran/alacran-tweaking-tool/releases/latest)** sayfasından `AlacranTweak.exe`'yi indir.
+1. **[Releases](https://github.com/alacran-8/alacran-tweaking-tool/releases/latest)** sayfasından `AlacranTweak.exe`'yi indir.
 2. Çift tıkla ve yönetici iznini onayla.
 3. **OPTİMİZE ET**'e bas ya da kategorilere girip istediğin ayarları seç.
 4. Bitince bilgisayarı yeniden başlat.
@@ -118,7 +118,7 @@ Uygulama tamamen ücretsiz. Bilgisayarına özel, birebir ileri seviye optimizas
 <summary><b>📜 Eski sürüm (1.1, .bat)</b></summary>
 <br>
 
-Eski Batch sürümü [`legacy/`](legacy) klasöründe ve [Releases](https://github.com/AIacran/alacran-tweaking-tool/releases) sayfasında duruyor.
+Eski Batch sürümü [`legacy/`](legacy) klasöründe ve [Releases](https://github.com/alacran-8/alacran-tweaking-tool/releases) sayfasında duruyor.
 Hataları düzeltilmiş kopyası ve düzeltme notları: [`legacy/fixed/`](legacy/fixed).
 Yeni sürüme hangi ayarların neden alınmadığı: [`docs/dropped-tweaks.md`](docs/dropped-tweaks.md).
 
@@ -160,7 +160,7 @@ A free, single-file tweak app for Windows 10 (21H2+) and Windows 11. Every chang
 - **Risky tweaks are separate** — marked **CAUTION**, off by default, confirmation required.
 - **No installer, no network access**, a system restore point before the first apply.
 
-**Use:** download `AlacranTweak.exe` from [Releases](https://github.com/AIacran/alacran-tweaking-tool/releases/latest), run it, accept the admin prompt. `--dry-run` shows everything and changes nothing.
+**Use:** download `AlacranTweak.exe` from [Releases](https://github.com/alacran-8/alacran-tweaking-tool/releases/latest), run it, accept the admin prompt. `--dry-run` shows everything and changes nothing.
 
 **Requirements:** Windows 10 21H2+ / 11 x64, admin rights, WebView2 Runtime, System Protection on for the system drive. The file is not code-signed yet; check the SHA-256 in the release notes.
 

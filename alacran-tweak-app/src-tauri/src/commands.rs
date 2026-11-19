@@ -27,8 +27,8 @@ pub const ALLOWED_LINKS: &[&str] = &[
     "https://kick.com/alacranfps",
     "https://www.youtube.com/@alacrann",
     "https://www.alacrantweak.com",
-    "https://github.com/AIacran/alacran-tweaking-tool",
-    "https://github.com/AIacran/alacran-tweaking-tool/releases",
+    "https://github.com/alacran-8/alacran-tweaking-tool",
+    "https://github.com/alacran-8/alacran-tweaking-tool/releases",
     "mailto:zorseker.3322@gmail.com",
     "https://developer.microsoft.com/microsoft-edge/webview2/",
 ];

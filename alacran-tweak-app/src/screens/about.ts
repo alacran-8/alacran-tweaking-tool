@@ -10,8 +10,8 @@ import { getLang, t } from "../i18n";
 import { pageHead, withSidebar } from "./layout";
 
 export const VERSION = "2.0.0";
-const GITHUB = "https://github.com/AIacran/alacran-tweaking-tool";
-const RELEASES = "https://github.com/AIacran/alacran-tweaking-tool/releases";
+const GITHUB = "https://github.com/alacran-8/alacran-tweaking-tool";
+const RELEASES = "https://github.com/alacran-8/alacran-tweaking-tool/releases";
 
 /** Bundled third-party code and its licence. */
 const LICENCES: [name: string, licence: string, roleKey: string][] = [
