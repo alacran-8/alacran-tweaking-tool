@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#120b0b"/>
+      <stop offset="1" stop-color="#2a1513"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffa500" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#880202" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb" cx="0.38" cy="0.32" r="0.75">
+      <stop offset="0" stop-color="#fff3c4"/>
+      <stop offset=".35" stop-color="#ffd700"/>
+      <stop offset=".7" stop-color="#ff8c00"/>
+      <stop offset="1" stop-color="#b3200a"/>
+    </radialGradient>
+    <linearGradient id="ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd700"/>
+      <stop offset=".5" stop-color="#c0392b"/>
+      <stop offset="1" stop-color="#ffd700" stop-opacity=".2"/>
+    </linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#fcbc23"/>
+    </linearGradient>
+    <linearGradient id="tube" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#880202" stop-opacity="0"/>
+      <stop offset=".5" stop-color="#ff7a00"/>
+      <stop offset="1" stop-color="#ffd700" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="360" rx="28" fill="url(#bg)"/>
+  <path d="M-20 300 C 260 180, 420 380, 700 250 S 1100 120, 1300 210" fill="none" stroke="url(#tube)" stroke-width="5" opacity=".7"/>
+  <path d="M-20 320 C 300 220, 460 360, 720 280 S 1120 170, 1300 250" fill="none" stroke="url(#tube)" stroke-width="2" opacity=".5"/>
+  <circle cx="1040" cy="180" r="170" fill="url(#glow)"/>
+  <circle cx="1040" cy="180" r="118" fill="none" stroke="url(#ring)" stroke-width="3" opacity=".8"/>
+  <circle cx="1040" cy="180" r="134" fill="none" stroke="#ffd700" stroke-width="1" stroke-dasharray="2 10" opacity=".5"/>
+  <circle cx="1040" cy="180" r="92" fill="url(#orb)"/>
+  <circle cx="1156" cy="146" r="5" fill="#ffd700"/>
+  <text x="1040" y="187" text-anchor="middle" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="20" font-weight="800" letter-spacing="2" fill="#2a0d06">OPTİMİZE ET</text>
+  <text x="80" y="150" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="64" font-weight="800" fill="url(#title)">Alacran Tweak Tool</text>
+  <text x="82" y="200" font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="26" fill="#e8d9c8">Windows için tek tıkla, geri alınabilir optimizasyon</text>
+  <g font-family="Segoe UI, Helvetica, Arial, sans-serif" font-size="17" font-weight="600">
+    <rect x="82" y="236" width="118" height="36" rx="18" fill="#880202"/>
+    <text x="141" y="260" text-anchor="middle" fill="#fff">v2.0</text>
+    <rect x="212" y="236" width="170" height="36" rx="18" fill="none" stroke="#fcbc23"/>
+    <text x="297" y="260" text-anchor="middle" fill="#fcbc23">Windows 10 / 11</text>
+    <rect x="394" y="236" width="150" height="36" rx="18" fill="none" stroke="#fcbc23"/>
+    <text x="469" y="260" text-anchor="middle" fill="#fcbc23">Ücretsiz · MIT</text>
+  </g>
+</svg>
