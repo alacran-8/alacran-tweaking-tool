@@ -1,0 +1,255 @@
+{
+  "tweaks": [
+    {
+      "id": "in_mouse_accel_off",
+      "category": "input",
+      "title": {
+        "tr": "Fare ivmesini kapat",
+        "en": "Turn off mouse acceleration"
+      },
+      "description": {
+        "tr": "Fare ayarlarındaki 'İşaretçi hassasiyetini artır' seçeneğini kapatır (MouseSpeed = 0, MouseThreshold1 = 0, MouseThreshold2 = 0). İşaretçi, elini ne hızda hareket ettirirsen ettir aynı mesafeyi gider; masaüstünde ve ham girdi (raw input) kullanmayan oyunlarda nişan alma tutarlı olur. Ham girdi kullanan oyunlar bu ayardan zaten etkilenmez. Oturumu kapatıp açtıktan sonra geçerli olur.",
+        "en": "Turns off 'Enhance pointer precision' in the mouse settings (MouseSpeed = 0, MouseThreshold1 = 0, MouseThreshold2 = 0). The pointer then moves the same distance for the same hand movement at any speed, so aiming is consistent on the desktop and in games that do not use raw input. Games that use raw input are not affected by this setting anyway. Takes effect after you sign out and back in."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Mouse",
+          "name": "MouseSpeed",
+          "data": { "type": "sz", "value": "0" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Mouse",
+          "name": "MouseThreshold1",
+          "data": { "type": "sz", "value": "0" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Mouse",
+          "name": "MouseThreshold2",
+          "data": { "type": "sz", "value": "0" }
+        }
+      ]
+    },
+    {
+      "id": "in_mouse_queue_size",
+      "category": "input",
+      "title": {
+        "tr": "Fare veri kuyruğu boyutu",
+        "en": "Mouse data queue size"
+      },
+      "description": {
+        "tr": "Fare sınıf sürücüsünün arabelleğe alabileceği fare paketi sayısını ayarlar (MouseDataQueueSize; Windows varsayılanı 100). Eski toplu dosya küçük değerlerin gecikmeyi düşürdüğünü söylüyordu; düşürmez: kuyruk yalnızca bir arabellektir ve Windows her paketi, boyut ne olursa olsun, gelir gelmez okur. Değer yalnızca sistem geride kaldığında kaç paketin sığacağını belirler. Yeniden başlatma gerekir.",
+        "en": "Sets how many mouse input packets the mouse class driver can buffer (MouseDataQueueSize; Windows default 100). The old batch file claimed smaller values lower input delay; they do not: the queue is only a buffer, and Windows reads every packet as soon as it arrives, whatever the size. The value only decides how many packets fit when the system falls behind. Restart required."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Çok küçük bir kuyruk, bilgisayar meşgulken fare hareketlerini veya tıklamaları kaybettirebilir; özellikle 4000–8000 Hz farelerde. 30'un altındaki değerler önerilmez; fare atlıyorsa geri al.",
+        "en": "Too small a queue can drop mouse movement or clicks while the PC is busy, especially with 4000–8000 Hz mice. Values below about 30 are not recommended; if the mouse skips, revert."
+      },
+      "options": [
+        {
+          "id": "32",
+          "label": { "tr": "32 (eski menüde 20)", "en": "32 (old menu: 20)" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\mouclass\\Parameters",
+              "name": "MouseDataQueueSize",
+              "data": { "type": "dword", "value": 32 }
+            }
+          ]
+        },
+        {
+          "id": "37",
+          "label": { "tr": "37 (eski menüde 25)", "en": "37 (old menu: 25)" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\mouclass\\Parameters",
+              "name": "MouseDataQueueSize",
+              "data": { "type": "dword", "value": 37 }
+            }
+          ]
+        },
+        {
+          "id": "48",
+          "label": { "tr": "48 (eski menüde 30)", "en": "48 (old menu: 30)" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\mouclass\\Parameters",
+              "name": "MouseDataQueueSize",
+              "data": { "type": "dword", "value": 48 }
+            }
+          ]
+        }
+      ],
+      "default_option": "48"
+    },
+    {
+      "id": "in_keyboard_queue_size",
+      "category": "input",
+      "title": {
+        "tr": "Klavye veri kuyruğu boyutu",
+        "en": "Keyboard data queue size"
+      },
+      "description": {
+        "tr": "Klavye sınıf sürücüsünün arabelleğe alabileceği tuş paketi sayısını ayarlar (KeyboardDataQueueSize; Windows varsayılanı 100). Fare kuyruğunda olduğu gibi küçük değerler gecikmeyi düşürmez; Windows her tuşu gelir gelmez okur. Değer yalnızca sistem geride kaldığında kaç tuş olayının sığacağını belirler. Yeniden başlatma gerekir.",
+        "en": "Sets how many key packets the keyboard class driver can buffer (KeyboardDataQueueSize; Windows default 100). As with the mouse queue, smaller values do not lower input delay; Windows reads every key as soon as it arrives. The value only decides how many key events fit when the system falls behind. Restart required."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Çok küçük bir kuyruk, bilgisayar meşgulken hızlı yazımda veya makrolarda tuş basışlarını kaybettirebilir. Tuşlar kaçıyorsa geri al.",
+        "en": "Too small a queue can drop key presses during fast typing or macros while the PC is busy. If keys are missed, revert."
+      },
+      "options": [
+        {
+          "id": "32",
+          "label": { "tr": "32 (eski menüde 20)", "en": "32 (old menu: 20)" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\kbdclass\\Parameters",
+              "name": "KeyboardDataQueueSize",
+              "data": { "type": "dword", "value": 32 }
+            }
+          ]
+        },
+        {
+          "id": "37",
+          "label": { "tr": "37 (eski menüde 25)", "en": "37 (old menu: 25)" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\kbdclass\\Parameters",
+              "name": "KeyboardDataQueueSize",
+              "data": { "type": "dword", "value": 37 }
+            }
+          ]
+        },
+        {
+          "id": "48",
+          "label": { "tr": "48 (eski menüde 30)", "en": "48 (old menu: 30)" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\kbdclass\\Parameters",
+              "name": "KeyboardDataQueueSize",
+              "data": { "type": "dword", "value": 48 }
+            }
+          ]
+        }
+      ],
+      "default_option": "32"
+    },
+    {
+      "id": "in_keyboard_repeat_fast",
+      "category": "input",
+      "title": {
+        "tr": "Klavye tekrar gecikmesini ve hızını en hızlıya ayarla",
+        "en": "Fastest keyboard repeat delay and rate"
+      },
+      "description": {
+        "tr": "Denetim Masası > Klavye'deki 'Tekrar gecikmesi'ni en kısaya (KeyboardDelay = 0, yaklaşık 250 ms) ve 'Tekrar hızı'nı en hızlıya (KeyboardSpeed = 31, saniyede yaklaşık 30 karakter) ayarlar. Basılı tutulan tuş daha erken ve daha hızlı tekrarlar. Tek bir tuş basışının oyuna ulaşma süresini değiştirmez. Oturumu kapatıp açtıktan sonra geçerli olur.",
+        "en": "Sets Control Panel > Keyboard 'Repeat delay' to the shortest (KeyboardDelay = 0, about 250 ms) and 'Repeat rate' to the fastest (KeyboardSpeed = 31, about 30 characters per second). A held key starts repeating sooner and repeats faster. It does not change how fast a single key press reaches a game. Takes effect after you sign out and back in."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Keyboard",
+          "name": "KeyboardDelay",
+          "data": { "type": "sz", "value": "0" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Keyboard",
+          "name": "KeyboardSpeed",
+          "data": { "type": "sz", "value": "31" }
+        }
+      ]
+    },
+    {
+      "id": "in_accessibility_shortcuts_off",
+      "category": "input",
+      "title": {
+        "tr": "Yapışkan Tuşlar ve benzeri kısayolları kapat",
+        "en": "Turn off Sticky Keys and similar shortcuts"
+      },
+      "description": {
+        "tr": "Yapışkan Tuşlar'ı (5 kez Shift), Filtre Tuşları'nı (sağ Shift'i 8 saniye basılı tutmak), Geçiş Tuşları'nı (Num Lock'u 5 saniye basılı tutmak) ve Fare Tuşları'nı (sol Alt + sol Shift + Num Lock) açan klavye kısayollarını kapatır; böylece açılır pencereleri oyunu bölmez. Özelliklerin kendisi de kapanır; istersen Ayarlar > Erişilebilirlik'ten yeniden açabilirsin. Oturumu kapatıp açtıktan sonra geçerli olur.",
+        "en": "Turns off the keyboard shortcuts that switch on Sticky Keys (Shift pressed 5 times), Filter Keys (right Shift held for 8 seconds), Toggle Keys (Num Lock held for 5 seconds) and Mouse Keys (left Alt + left Shift + Num Lock), so their pop-ups cannot interrupt a game. The features themselves are turned off too; you can still turn them on in Settings > Accessibility. Takes effect after you sign out and back in."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Accessibility\\StickyKeys",
+          "name": "Flags",
+          "data": { "type": "sz", "value": "506" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Accessibility\\Keyboard Response",
+          "name": "Flags",
+          "data": { "type": "sz", "value": "122" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Accessibility\\ToggleKeys",
+          "name": "Flags",
+          "data": { "type": "sz", "value": "58" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Accessibility\\MouseKeys",
+          "name": "Flags",
+          "data": { "type": "sz", "value": "58" }
+        }
+      ]
+    }
+  ]
+}

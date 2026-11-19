@@ -1,0 +1,216 @@
+{
+  "tweaks": [
+    {
+      "id": "cpu_power_throttling_off",
+      "category": "cpu",
+      "title": {
+        "tr": "Güç kısıtlamasını (Power Throttling) kapat",
+        "en": "Turn off Power Throttling"
+      },
+      "description": {
+        "tr": "Windows, arka plandaki uygulamaları enerji tasarrufu için işlemcinin verimli çekirdeklerine ve düşük frekanslara iter (EcoQoS). Bu ayar bunu sistem genelinde kapatır; oyun oynarken arka planda çalışan yayın, kayıt veya sesli sohbet programları yavaşlatılmaz. Ön plandaki oyunun kendisi zaten kısıtlanmaz, bu yüzden FPS artışı beklenmemeli. Yeniden başlattıktan sonra tam geçerli olur.",
+        "en": "Windows pushes background apps onto efficient cores and lower clock speeds to save energy (EcoQoS). This turns that off system-wide, so streaming, recording or voice-chat apps running in the background while you play are not slowed down. The game in the foreground is not throttled anyway, so do not expect higher FPS. Fully takes effect after a restart."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Power\\PowerThrottling",
+          "name": "PowerThrottlingOff",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    },
+    {
+      "id": "cpu_min_state_100",
+      "category": "cpu",
+      "title": {
+        "tr": "Minimum işlemci durumunu %100 yap",
+        "en": "Set minimum processor state to 100%"
+      },
+      "description": {
+        "tr": "Etkin güç planında, prize takılıyken 'Minimum işlemci durumu' ayarını %100 yapar (powercfg: PROCTHROTTLEMIN). İşlemci boştayken de yüksek frekansta kalır; yük geldiğinde hızlanmak için beklemez. Ultimate/Yüksek Performans planları bunu zaten %100 kullanır. Intel hibrit işlemcilerde (12. nesil ve sonrası) Windows ikinci çekirdek sınıfı için ayrı bir ayar (PROCTHROTTLEMIN1) tutar; bu ayar yalnızca bir çekirdek sınıfını değiştirir. Daha fazla ısı ve güç tüketimi demektir. Plan değiştirirsen yeni planda tekrar uygulaman gerekir.",
+        "en": "Sets 'Minimum processor state' to 100% for plugged-in use in the active power plan (powercfg: PROCTHROTTLEMIN). The CPU stays at a high clock speed even when idle, so it does not have to ramp up when load arrives. The Ultimate/High Performance plans already use 100%. On Intel hybrid CPUs (12th gen and newer) Windows keeps a separate setting for the second core class (PROCTHROTTLEMIN1), so this changes only one core class. It means more heat and power use. If you switch power plans, apply it again in the new plan."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "power_value",
+          "subgroup": "54533251-82be-4824-96c1-47b60b740d00",
+          "setting": "893dee8e-2bef-41e0-89c6-b55d0929964c",
+          "ac": 100,
+          "dc": null
+        }
+      ]
+    },
+    {
+      "id": "cpu_core_parking_off",
+      "category": "cpu",
+      "title": {
+        "tr": "Çekirdek park etmeyi kapat",
+        "en": "Turn off core parking"
+      },
+      "description": {
+        "tr": "Etkin güç planında, prize takılıyken 'Core parking min cores' ayarını %100 yapar (powercfg: CPMINCORES). Windows boştaki çekirdekleri uyutmaz; ani yükte uyuyan bir çekirdeğin uyanmasını beklemek gerekmez. Ultimate/Yüksek Performans planları çekirdek park etmeyi zaten kapatır. Intel hibrit işlemcilerde (12. nesil ve sonrası) Windows ikinci çekirdek sınıfı için ayrı bir ayar (CPMINCORES1) tutar; bu ayar yalnızca bir çekirdek sınıfını değiştirir. Daha fazla ısı ve güç tüketimi demektir. Plan değiştirirsen yeni planda tekrar uygulaman gerekir.",
+        "en": "Sets 'Core parking min cores' to 100% for plugged-in use in the active power plan (powercfg: CPMINCORES). Windows no longer puts idle cores to sleep, so a sudden load does not have to wait for a parked core to wake. The Ultimate/High Performance plans already turn core parking off. On Intel hybrid CPUs (12th gen and newer) Windows keeps a separate setting for the second core class (CPMINCORES1), so this changes only one core class. It means more heat and power use. If you switch power plans, apply it again in the new plan."
+      },
+      "caution_note": {
+        "tr": "İki yongalı Ryzen X3D işlemcilerde (ör. 7900X3D, 7950X3D, 9950X3D) AMD'nin sürücüsü, oyunları 3D V-Cache'li çekirdeklere yönlendirmek için çekirdek park etmeyi kullanır. Bu ayar o mekanizmayı devre dışı bırakır ve bu işlemcilerde oyun performansı düşebilir.",
+        "en": "On dual-CCD Ryzen X3D CPUs (e.g. 7900X3D, 7950X3D, 9950X3D) AMD's driver uses core parking to steer games onto the 3D V-Cache cores. This setting defeats that mechanism, and game performance on those CPUs can drop."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "power_value",
+          "subgroup": "54533251-82be-4824-96c1-47b60b740d00",
+          "setting": "0cc5b647-c1df-4637-891a-dec35c318583",
+          "ac": 100,
+          "dc": null
+        }
+      ]
+    },
+    {
+      "id": "cpu_epp_performance",
+      "category": "cpu",
+      "title": {
+        "tr": "İşlemci enerji tercihini 'en yüksek performans' yap",
+        "en": "Set processor energy preference to maximum performance"
+      },
+      "description": {
+        "tr": "Etkin güç planında, prize takılıyken 'Processor energy performance preference' (EPP) ayarını 0 yapar (powercfg: PERFEPP). Frekansı kendisi yöneten işlemcilere (Intel 6. nesil ve sonrası, CPPC destekli AMD Ryzen) enerji yerine performansı seçmelerini söyler; işlemci yük altında daha hızlı ve daha yüksek frekansa çıkar. Bu özelliği desteklemeyen eski işlemcilerde etkisi yoktur. Intel hibrit işlemcilerde (12. nesil ve sonrası) Windows bir çekirdek türü için ayrı bir kopya tutar; bu ayar o kopyayı değiştirmez. Plan değiştirirsen yeni planda tekrar uygulaman gerekir.",
+        "en": "Sets 'Processor energy performance preference' (EPP) to 0 for plugged-in use in the active power plan (powercfg: PERFEPP). It tells CPUs that manage their own clocks (Intel 6th gen and newer, AMD Ryzen with CPPC) to favour performance over energy, so the CPU clocks up faster and higher under load. No effect on older CPUs without this feature. On Intel hybrid CPUs (12th gen and newer) Windows keeps a separate copy for one core type, which this setting does not change. If you switch power plans, apply it again in the new plan."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "power_value",
+          "subgroup": "54533251-82be-4824-96c1-47b60b740d00",
+          "setting": "36687f9e-e3a5-4dbf-b1dc-15eb381c6863",
+          "ac": 0,
+          "dc": null
+        }
+      ]
+    },
+    {
+      "id": "cpu_throttle_states_off",
+      "category": "cpu",
+      "title": {
+        "tr": "İşlemci kısma durumlarını (T-state) kapat",
+        "en": "Turn off processor throttle states (T-states)"
+      },
+      "description": {
+        "tr": "Etkin güç planında, prize takılıyken 'Allow Throttle States' ayarını 'Kapalı' yapar (powercfg: THROTTLING). Windows'un işlemci saatini kısma durumlarıyla (T-state) yavaşlatmasını engeller. Çoğu güncel bilgisayarda Windows bu durumları zaten kullanmaz, bu yüzden genellikle fark olmaz; yalnızca donanım yazılımı T-state sunan sistemlerde etkilidir. Aşırı ısınmaya karşı donanımın kendi koruması etkilenmez. Plan değiştirirsen yeni planda tekrar uygulaman gerekir.",
+        "en": "Sets 'Allow Throttle States' to 'Off' for plugged-in use in the active power plan (powercfg: THROTTLING). It stops Windows from slowing the CPU clock with throttle states (T-states). Most current PCs do not use these states anyway, so there is usually no difference; it only matters on systems whose firmware exposes T-states. The hardware's own overheating protection is not affected. If you switch power plans, apply it again in the new plan."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "power_value",
+          "subgroup": "54533251-82be-4824-96c1-47b60b740d00",
+          "setting": "3b04d4fd-1cc7-4f23-ab1c-d1337819c4bb",
+          "ac": 0,
+          "dc": null
+        }
+      ]
+    },
+    {
+      "id": "cpu_spectre_meltdown_off",
+      "category": "cpu",
+      "title": {
+        "tr": "Spectre ve Meltdown korumalarını kapat",
+        "en": "Turn off Spectre and Meltdown mitigations"
+      },
+      "description": {
+        "tr": "Microsoft'un belgelediği FeatureSettingsOverride/FeatureSettingsOverrideMask = 3 değerleriyle Spectre v2 (CVE-2017-5715) ve Meltdown (CVE-2017-5754) yazılım korumalarını kapatır. Kazanç işlemciye bağlıdır: 2018 öncesi Intel işlemcilerde disk ve sistem çağrısı yoğun işlerde fark edilebilir, donanım düzeltmeli yeni Intel ve AMD işlemcilerde oyunlarda genellikle ölçülemeyecek kadar küçüktür. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off the Spectre v2 (CVE-2017-5715) and Meltdown (CVE-2017-5754) software mitigations with the Microsoft-documented FeatureSettingsOverride/FeatureSettingsOverrideMask = 3 values. The gain depends on the CPU: on pre-2018 Intel CPUs it can be noticeable in disk- and system-call-heavy work; on newer Intel and AMD CPUs with hardware fixes it is usually too small to measure in games. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Güvenliği ciddi şekilde azaltır: bilgisayarda çalışan kötü amaçlı bir program, çekirdek ve diğer programların belleğindeki parolaları ve gizli verileri okuyabilir. Tarayıcılar kendi korumalarını ayrıca kullanmaya devam eder. Yalnızca riskini bildiğin ve çoğunlukla oyun için kullandığın bir bilgisayarda uygula.",
+        "en": "Seriously weakens security: a malicious program running on the PC can read passwords and other secrets from the memory of the kernel and other programs. Browsers keep their own separate protections. Only apply it on a PC you mostly use for games and when you accept that risk."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management",
+          "name": "FeatureSettingsOverride",
+          "data": { "type": "dword", "value": 3 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management",
+          "name": "FeatureSettingsOverrideMask",
+          "data": { "type": "dword", "value": 3 }
+        }
+      ]
+    },
+    {
+      "id": "cpu_process_mitigations_off",
+      "category": "cpu",
+      "title": {
+        "tr": "Sistem geneli exploit korumalarını kapat",
+        "en": "Turn off system-wide exploit protection"
+      },
+      "description": {
+        "tr": "Windows Güvenliği > Exploit koruması altındaki sistem geneli korumaları (CFG, ASLR, SEHOP ve diğerleri) kapatır; toplu dosyadaki 'Set-ProcessMitigation -System -Disable' komutunun karşılığı olan çekirdek MitigationOptions değerini yazar. Bazı programlarda çok küçük bir işlemci tasarrufu sağlayabilir; oyunlarda belirgin bir FPS artışı beklenmemeli. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off the system-wide protections under Windows Security > Exploit protection (CFG, ASLR, SEHOP and others) by writing the kernel MitigationOptions value, the equivalent of the batch's 'Set-ProcessMitigation -System -Disable' command. It can save a very small amount of CPU time in some programs; do not expect a clear FPS gain in games. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Kötü amaçlı yazılımların ve tarayıcı açıklarının çalışmasını kolaylaştırır. Bazı hile önleme (anti-cheat) sistemleri CFG'ye ihtiyaç duyar; örneğin Riot Vanguard (Valorant) ve FACEIT bu korumalar kapalıyken oyunu başlatmayı reddedebilir.",
+        "en": "Makes it easier for malware and browser exploits to work. Some anti-cheat systems need CFG; for example Riot Vanguard (Valorant) and FACEIT can refuse to start the game while these protections are off."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\kernel",
+          "name": "MitigationOptions",
+          "data": { "type": "binary", "value": "222222222222222222222222222222222222222222222222" }
+        }
+      ]
+    }
+  ]
+}

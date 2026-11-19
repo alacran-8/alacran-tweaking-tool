@@ -1,0 +1,95 @@
+{
+  "tweaks": [
+    {
+      "id": "perf_bcd_platform_clock_default",
+      "category": "performance",
+      "title": {
+        "tr": "Zorlanmış HPET saatini kaldır",
+        "en": "Remove a forced HPET clock"
+      },
+      "description": {
+        "tr": "Önyükleme ayarlarından 'useplatformclock' değerini siler. Bu değer başka bir tweak aracı tarafından açıldıysa Windows zaman ölçümü için yavaş HPET saatini kullanmaya zorlanır, bu da oyunlarda zamanlayıcı çağrılarını yavaşlatır. Değer yoksa (Windows varsayılanı) hiçbir şey değişmez. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Deletes the 'useplatformclock' value from the boot settings. If another tweak tool turned it on, Windows is forced to use the slow HPET clock for timekeeping, which makes timer calls in games slower. If the value is not set (the Windows default), nothing changes. Takes effect after a restart."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [{ "op": "bcd_delete", "name": "useplatformclock" }]
+    },
+    {
+      "id": "perf_bcd_dynamic_tick_off",
+      "category": "performance",
+      "title": {
+        "tr": "Dinamik tick'i kapat",
+        "en": "Turn off dynamic tick"
+      },
+      "description": {
+        "tr": "Windows'un boşta kaldığında zamanlayıcı kesmelerini durdurup enerji tasarrufu yapmasını kapatır (disabledynamictick = Yes). Bazı kullanıcılar daha tutarlı kare süreleri ve daha düşük gecikme bildirir, ancak etkisi tartışmalıdır ve çoğu ölçümde fark görülmez. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off Windows' power saving that stops timer interrupts while the system is idle (disabledynamictick = Yes). Some users report more consistent frame times and lower latency, but the effect is disputed and most measurements show no difference. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Boşta güç tüketimi artar; dizüstü bilgisayarlarda pil süresi kısalır ve işlemci daha az uyku durumuna geçer. Fark görmezsen geri al.",
+        "en": "Idle power use goes up; on laptops battery life gets shorter and the CPU enters fewer sleep states. If you see no difference, revert it."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [{ "op": "bcd_set", "name": "disabledynamictick", "value": "Yes" }]
+    },
+    {
+      "id": "perf_bcd_platform_tick_on",
+      "category": "performance",
+      "title": {
+        "tr": "Platform tick'i zorla",
+        "en": "Force the platform tick"
+      },
+      "description": {
+        "tr": "Windows'un sistem zamanlayıcısı için işlemcinin kendi zamanlayıcısı yerine anakarttaki platform zamanlayıcısını kullanmasını zorlar (useplatformtick = Yes). Bazı tweak rehberleri bunu daha tutarlı zamanlama için önerir; etkisi tartışmalıdır, bazı sistemlerde gecikme artabilir. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Forces Windows to use the motherboard's platform timer instead of the CPU's own timer for the system tick (useplatformtick = Yes). Some tweak guides recommend it for more consistent timing; the effect is disputed and latency can get worse on some systems. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Etkisi sistemden sisteme değişir ve kanıtlanmış bir kazancı yoktur. Uyguladıktan sonra oyunlarda takılma veya fare tepkisinde kötüleşme fark edersen geri al.",
+        "en": "The effect varies from system to system and there is no proven gain. If you notice stutter in games or worse mouse response after applying it, revert it."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [{ "op": "bcd_set", "name": "useplatformtick", "value": "Yes" }]
+    },
+    {
+      "id": "perf_bcd_hypervisor_off",
+      "category": "performance",
+      "title": {
+        "tr": "Hyper-V hipervizörünü ve VBS'yi kapat",
+        "en": "Turn off the Hyper-V hypervisor and VBS"
+      },
+      "description": {
+        "tr": "Windows'un açılışta Hyper-V hipervizörünü ve onun üzerinde çalışan Sanallaştırma Tabanlı Güvenliği (VBS) başlatmasını kapatır (hypervisorlaunchtype = Off, vsmlaunchtype = Off). VBS açık olan sistemlerde (birçok yeni Windows 11 bilgisayar) oyunlarda birkaç yüzde performans kazancı sağlayabilir. VBS zaten kapalıysa fark olmaz. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Stops Windows from starting the Hyper-V hypervisor and the Virtualization-Based Security (VBS) running on top of it at boot (hypervisorlaunchtype = Off, vsmlaunchtype = Off). On systems with VBS on (many new Windows 11 PCs) this can give games a few percent more performance. If VBS is already off, nothing changes. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Güvenlik ve özellik kaybı: Bellek bütünlüğü (HVCI; 'Bellek bütünlüğünü (HVCI) kapat' tweak'i ile aynı etki), Credential Guard ve diğer VBS korumaları çalışmaz. WSL 2, Hyper-V sanal makineleri, Windows Sandbox, Android için Windows alt sistemi ve sanallaştırma kullanan bazı emülatörler açılmaz. VBS gerektiren kurumsal politikalar, hile önleme (anti-cheat) veya kopya koruma yazılımları uyarı verebilir.",
+        "en": "Security and feature loss: Memory integrity (HVCI; the same effect as the 'Turn off Memory integrity (HVCI)' tweak), Credential Guard and the other VBS protections stop working. WSL 2, Hyper-V virtual machines, Windows Sandbox, the Windows Subsystem for Android and some emulators that use virtualization no longer start. Corporate policies or anti-cheat/copy protection software that require VBS may complain."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "bcd_set", "name": "hypervisorlaunchtype", "value": "Off" },
+        { "op": "bcd_set", "name": "vsmlaunchtype", "value": "Off" }
+      ]
+    }
+  ]
+}

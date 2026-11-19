@@ -1,0 +1,89 @@
+{
+  "tweaks": [
+    {
+      "id": "sto_last_access_off",
+      "category": "storage",
+      "title": {
+        "tr": "Son erişim zamanı güncellemesini kapat",
+        "en": "Turn off last-access time updates"
+      },
+      "description": {
+        "tr": "NTFS'nin her dosya okunduğunda 'son erişim' zamanını diske yazmasını durdurur (NtfsDisableLastAccessUpdate = 0x80000001, kullanıcı yönetimli; 'fsutil behavior set disablelastaccess 1' ile aynı). Küçük disk yazmalarından tasarruf sağlar. Çoğu Windows 10/11 bilgisayarında bu zaten kapalıdır (sistem yönetimli); bu ayar onu kalıcı yapar. Son erişim zamanına dayanan yedekleme araçları nadirdir. Yeniden başlatma gerekir.",
+        "en": "Stops NTFS from writing the 'last accessed' time to disk every time a file is read (NtfsDisableLastAccessUpdate = 0x80000001, user-managed, the same as 'fsutil behavior set disablelastaccess 1'). It saves small disk writes. On most Windows 10/11 PCs it is already off (system-managed); this makes that permanent. Backup tools that rely on last-access times are rare. Restart required."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+          "name": "NtfsDisableLastAccessUpdate",
+          "data": { "type": "dword", "value": 2147483649 }
+        }
+      ]
+    },
+    {
+      "id": "sto_8dot3_off",
+      "category": "storage",
+      "title": {
+        "tr": "8.3 kısa dosya adlarını kapat",
+        "en": "Turn off 8.3 short file names"
+      },
+      "description": {
+        "tr": "NTFS'nin tüm sürücülerde her yeni dosya için ayrıca MS-DOS tarzı kısa ad (örneğin PROGRA~1) oluşturmasını durdurur (NtfsDisable8dot3NameCreation = 1). Çok sayıda dosya içeren klasörlerde dosya oluşturma biraz hızlanır; oyunlarda fark ölçülemez. Mevcut kısa adlar korunur. Yeniden başlatma gerekir.",
+        "en": "Stops NTFS from creating an extra MS-DOS style short name (for example PROGRA~1) for every new file on all drives (NtfsDisable8dot3NameCreation = 1). Creating files in folders with very many files gets slightly faster; in games the difference cannot be measured. Existing short names are kept. Restart required."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Bazı çok eski programlar ve kurulum dosyaları kısa adlara ihtiyaç duyar ve bundan sonra oluşturulan dosyalarda hata verebilir.",
+        "en": "Some very old programs and installers need short names and can fail with files created afterwards."
+      },
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+          "name": "NtfsDisable8dot3NameCreation",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    },
+    {
+      "id": "sto_ntfs_memory_usage",
+      "category": "storage",
+      "title": {
+        "tr": "NTFS önbellek bellek sınırını yükselt",
+        "en": "Raise the NTFS cache memory limit"
+      },
+      "description": {
+        "tr": "NTFS'nin dosya sistemi bilgilerini önbelleğe almak için daha fazla bellek kullanmasına izin verir (NtfsMemoryUsage = 2; 'fsutil behavior set memoryusage 2' ile aynı). Büyük derlemeler veya dosya sunucuları gibi çok sayıda dosyanın açıldığı durumlarda yardımcı olur; oyunlarda etkisi genellikle ölçülemez. Biraz daha fazla RAM kullanır. Yeniden başlatma gerekir.",
+        "en": "Lets NTFS use more memory to cache file-system information (NtfsMemoryUsage = 2, the same as 'fsutil behavior set memoryusage 2'). It helps when very many files are opened, for example big builds or file servers; in games the effect is usually not measurable. Uses a little more RAM. Restart required."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\FileSystem",
+          "name": "NtfsMemoryUsage",
+          "data": { "type": "dword", "value": 2 }
+        }
+      ]
+    }
+  ]
+}

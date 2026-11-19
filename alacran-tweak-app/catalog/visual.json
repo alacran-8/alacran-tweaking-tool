@@ -1,0 +1,151 @@
+{
+  "tweaks": [
+    {
+      "id": "vis_effects_performance",
+      "category": "visual",
+      "title": {
+        "tr": "Görsel efektleri performans için ayarla",
+        "en": "Set visual effects for performance"
+      },
+      "description": {
+        "tr": "Animasyonlar, solmalar ve gölgeler için Sistem Özellikleri > Performans Seçenekleri'ndeki 'En iyi performans için ayarla' ile aynı ayarları yapar (UserPreferencesMask = 90 12 03 80 10 00 00 00, VisualFXSetting = 3 'Özel'): menü, pencere, görev çubuğu ve araç ipucu animasyonlarını, solmaları, gölgeleri ve Aero Peek'i kapatır. Küçük resimler, yazı tipi yumuşatma ve pencere sürükleme ayarlarına dokunulmaz. Windows özellikle zayıf bilgisayarlarda daha çabuk tepki verir; oyunlarda FPS'i artırmaz. Oturumu kapatıp açtıktan sonra geçerli olur.",
+        "en": "Matches System Properties > Performance Options > 'Adjust for best performance' for animations, fades and shadows (UserPreferencesMask = 90 12 03 80 10 00 00 00, VisualFXSetting = 3 'Custom'): turns off menu, window, taskbar and tooltip animations, fades, shadows and Aero Peek. Thumbnails, font smoothing and window-drag settings are left unchanged. Windows feels snappier, especially on weak PCs; it does not raise FPS in games. Takes effect after you sign out and back in."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Desktop",
+          "name": "UserPreferencesMask",
+          "data": { "type": "binary", "value": "9012038010000000" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\VisualEffects",
+          "name": "VisualFXSetting",
+          "data": { "type": "dword", "value": 3 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Desktop\\WindowMetrics",
+          "name": "MinAnimate",
+          "data": { "type": "sz", "value": "0" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced",
+          "name": "TaskbarAnimations",
+          "data": { "type": "dword", "value": 0 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Microsoft\\Windows\\DWM",
+          "name": "EnableAeroPeek",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "vis_transparency_off",
+      "category": "visual",
+      "title": {
+        "tr": "Saydamlık efektlerini kapat",
+        "en": "Turn off transparency effects"
+      },
+      "description": {
+        "tr": "Ayarlar > Kişiselleştirme > Renkler > Saydamlık efektleri'ni kapatır (EnableTransparency = 0). Görev çubuğu, Başlat menüsü ve pencere arka planları düz renk olur. Ekran kartına biraz iş azaltır, bu da en çok zayıf tümleşik grafiklerde fark edilir; tam ekran oyunlarda FPS değişmez.",
+        "en": "Turns off Settings > Personalisation > Colours > Transparency effects (EnableTransparency = 0). The taskbar, Start menu and window backgrounds become solid. It saves a little GPU work, mostly noticeable on weak integrated graphics; FPS in fullscreen games does not change."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+          "name": "EnableTransparency",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "vis_menu_delay_off",
+      "category": "visual",
+      "title": {
+        "tr": "Menü açılma gecikmesini kaldır",
+        "en": "Remove the menu open delay"
+      },
+      "description": {
+        "tr": "Alt menüler (örneğin sağ tık menülerinde) 400 ms beklemek yerine işaretçi üzerlerine gelir gelmez açılır (MenuShowDelay = 0). Masaüstü daha hızlı hissettirir; oyunlarda etkisi yoktur. Oturumu kapatıp açtıktan sonra geçerli olur.",
+        "en": "Submenus (for example in right-click menus) open as soon as the pointer reaches them instead of after 400 ms (MenuShowDelay = 0). The desktop feels faster; there is no effect in games. Takes effect after you sign out and back in."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Desktop",
+          "name": "MenuShowDelay",
+          "data": { "type": "sz", "value": "0" }
+        }
+      ]
+    },
+    {
+      "id": "vis_display_scaling_100",
+      "category": "visual",
+      "title": {
+        "tr": "Ekran ölçeklendirmesini %100 yap",
+        "en": "Set display scaling to 100%"
+      },
+      "description": {
+        "tr": "Tüm ekranlar için %100 özel ölçeklendirme ayarlar (LogPixels = 96, Win8DpiScaling = 1); Ayarlar > Ekran > Gelişmiş ölçeklendirme ile aynıdır. 1920×1080 ekranlarda bu çoğunlukla zaten varsayılandır; o zaman DPI'yi tanımayan oyunlar Windows tarafından büyütülmeden doğal çözünürlükte çizilir. Yüksek çözünürlüklü veya küçük dizüstü ekranlarında yazılar ve pencereler küçülür. Oturumu kapatıp açtıktan sonra geçerli olur.",
+        "en": "Sets a custom display scaling of 100% for all screens (LogPixels = 96, Win8DpiScaling = 1), the same as Settings > Display > Advanced scaling. On 1920×1080 screens this is usually the default already; games that are not DPI-aware are then drawn at native resolution without Windows stretching them. On high-resolution or small laptop screens text and windows get smaller. Takes effect after you sign out and back in."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "4K ekranlarda ve küçük dizüstü ekranlarında yazılar ve pencereler çok küçülür, okunması zorlaşabilir. Windows bunu 'özel ölçeklendirme' olarak gösterir; geri almak için bu ayarı geri al.",
+        "en": "On 4K screens and small laptop screens text and windows become very small and can be hard to read. Windows shows this as 'custom scaling'; revert this tweak to undo it."
+      },
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Desktop",
+          "name": "LogPixels",
+          "data": { "type": "dword", "value": 96 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Control Panel\\Desktop",
+          "name": "Win8DpiScaling",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    }
+  ]
+}

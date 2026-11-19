@@ -1,0 +1,546 @@
+{
+  "tweaks": [
+    {
+      "id": "prv_telemetry_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Tanılama verilerini ve geri bildirim isteklerini en aza indir",
+        "en": "Minimize diagnostic data and feedback requests"
+      },
+      "description": {
+        "tr": "Politikalarla tanılama verisini en düşük seviyeye indirir (AllowTelemetry = 0), aygıt adının tanılama verisine eklenmesini kapatır, Müşteri Deneyimini Geliştirme Programı'nı (CEIPEnable = 0) ve Uygulama Telemetrisi'ni (AITEnable = 0) kapatır, geri bildirim sıklığını 'Hiçbir zaman' yapar. Home ve Pro sürümlerinde 0 değeri 'Gerekli tanılama verileri' olarak uygulanır; tamamen kapatma yalnızca Enterprise/Education'da mümkündür. Windows Insider programı isteğe bağlı tanılama verisi ister.",
+        "en": "Uses policies to lower diagnostic data to the minimum level (AllowTelemetry = 0), stops adding the device name to diagnostic data, turns off the Customer Experience Improvement Program (CEIPEnable = 0) and Application Telemetry (AITEnable = 0), and sets feedback frequency to 'Never'. On Home and Pro the value 0 is applied as 'Required diagnostic data'; switching it off completely is only possible on Enterprise/Education. The Windows Insider Program needs optional diagnostic data."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "AllowTelemetry", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\DataCollection", "name": "AllowDeviceNameInTelemetry", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\SQMClient\\Windows", "name": "CEIPEnable", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\AppCompat", "name": "AITEnable", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Siuf\\Rules", "name": "NumberOfSIUFInPeriod", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_delete_value", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Siuf\\Rules", "name": "PeriodInNanoSeconds" }
+      ]
+    },
+    {
+      "id": "prv_telemetry_tasks_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Telemetri zamanlanmış görevlerini kapat",
+        "en": "Turn off the telemetry scheduled tasks"
+      },
+      "description": {
+        "tr": "Kullanım ve uyumluluk verisi toplayıp gönderen zamanlanmış görevleri devre dışı bırakır: Müşteri Deneyimini Geliştirme Programı (Consolidator, UsbCeip, KernelCeipTask), Uygulama Deneyimi (Microsoft Compatibility Appraiser, ProgramDataUpdater), Autochk Proxy, disk tanılama veri toplayıcısı, geri bildirim (DmClient), SQM görevleri, aygıt bilgisi (Device, Device User), özellik kullanım raporları, ağ bilgisi toplama ve güç verimliliği tanılaması. Bu görevler çoğunlukla bilgisayar boştayken çalışır ve kısa süreli işlemci/disk kullanır. Windows sürümünde bulunmayan görevler atlanır.",
+        "en": "Disables the scheduled tasks that collect and send usage and compatibility data: Customer Experience Improvement Program (Consolidator, UsbCeip, KernelCeipTask), Application Experience (Microsoft Compatibility Appraiser, ProgramDataUpdater), Autochk Proxy, the disk diagnostic data collector, feedback (DmClient), SQM tasks, device information (Device, Device User), feature usage reports, network information gathering and power efficiency diagnostics. These tasks mostly run while the PC is idle and cause short bursts of CPU/disk use. Tasks that your Windows version does not have are skipped."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\Consolidator" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\UsbCeip" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Customer Experience Improvement Program\\KernelCeipTask" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Application Experience\\Microsoft Compatibility Appraiser" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Application Experience\\ProgramDataUpdater" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Autochk\\Proxy" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\DiskDiagnostic\\Microsoft-Windows-DiskDiagnosticDataCollector" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClient" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Feedback\\Siuf\\DmClientOnScenarioDownload" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\PI\\Sqm-Tasks" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Device Information\\Device" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Device Information\\Device User" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataReporting" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Flighting\\FeatureConfig\\UsageDataFlushing" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\NetTrace\\GatherNetworkInfo" },
+        { "op": "task_disable", "path": "\\Microsoft\\Windows\\Power Efficiency Diagnostics\\AnalyzeSystem" }
+      ]
+    },
+    {
+      "id": "prv_ads_suggestions_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Reklam kimliğini ve önerileri kapat",
+        "en": "Turn off the advertising ID and suggestions"
+      },
+      "description": {
+        "tr": "Uygulamaların sana özel reklam göstermek için kullandığı reklam kimliğini kapatır (ayar ve politika), tanılama verisine dayalı 'Özel deneyimler'i, web sitelerinin dil listene erişmesini, Ayarlar uygulamasındaki önerilen içerikleri ve Dosya Gezgini'ndeki eşitleme sağlayıcısı (OneDrive) bildirimlerini kapatır.",
+        "en": "Turns off the advertising ID that apps use for personalized ads (setting and policy), 'Tailored experiences' based on diagnostic data, websites' access to your language list, suggested content in the Settings app and sync provider (OneDrive) notifications in File Explorer."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\AdvertisingInfo", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\AdvertisingInfo", "name": "DisabledByGroupPolicy", "data": { "type": "dword", "value": 1 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Privacy", "name": "TailoredExperiencesWithDiagnosticDataEnabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "Control Panel\\International\\User Profile", "name": "HttpAcceptLanguageOptOut", "data": { "type": "dword", "value": 1 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-338393Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-353694Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\ContentDeliveryManager", "name": "SubscribedContent-353696Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "ShowSyncProviderNotifications", "data": { "type": "dword", "value": 0 } }
+      ]
+    },
+    {
+      "id": "prv_activity_history_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Etkinlik geçmişini ve uygulama izlemeyi kapat",
+        "en": "Turn off activity history and app tracking"
+      },
+      "description": {
+        "tr": "Politikalarla etkinlik geçmişinin (Zaman Çizelgesi) toplanmasını, yayımlanmasını ve Microsoft'a yüklenmesini kapatır, kullanıcı izlemeyi kapatır (NoInstrumentation) ve Başlat ile aramanın açtığın uygulamaları izlemesini durdurur. Başlat menüsündeki 'En çok kullanılanlar' listesi boş kalır.",
+        "en": "Uses policies to stop activity history (Timeline) from being collected, published and uploaded to Microsoft, turns off user tracking (NoInstrumentation) and stops Start and search from tracking the apps you open. The 'Most used' list in Start stays empty."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "EnableActivityFeed", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "PublishUserActivities", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\System", "name": "UploadUserActivities", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer", "name": "NoInstrumentation", "data": { "type": "dword", "value": 1 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Advanced", "name": "Start_TrackProgs", "data": { "type": "dword", "value": 0 } }
+      ]
+    },
+    {
+      "id": "prv_speech_inking_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Çevrimiçi konuşma tanımayı ve yazma kişiselleştirmesini kapat",
+        "en": "Turn off online speech recognition and typing personalization"
+      },
+      "description": {
+        "tr": "Sesinin Microsoft'un çevrimiçi konuşma tanıma hizmetine gönderilmesini ve 'Mürekkep ve yazma kişiselleştirmesi'ni kapatır: Windows yazdıklarından, el yazından ve kişilerinden kişisel sözlük oluşturmaz. Sesle yazma (Win + H) ve çevrimiçi konuşma tanımaya dayalı özellikler çalışmaz.",
+        "en": "Stops sending your voice to Microsoft's online speech recognition service and turns off 'Inking and typing personalization': Windows no longer builds a personal dictionary from your typing, handwriting and contacts. Voice typing (Win + H) and features based on online speech recognition stop working."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Speech_OneCore\\Settings\\OnlineSpeechPrivacy", "name": "HasAccepted", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Personalization\\Settings", "name": "AcceptedPrivacyPolicy", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\InputPersonalization", "name": "RestrictImplicitInkCollection", "data": { "type": "dword", "value": 1 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\InputPersonalization", "name": "RestrictImplicitTextCollection", "data": { "type": "dword", "value": 1 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\InputPersonalization\\TrainedDataStore", "name": "HarvestContacts", "data": { "type": "dword", "value": 0 } }
+      ]
+    },
+    {
+      "id": "prv_app_access_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Uygulamaların konum, bildirim ve hesap bilgisi erişimini kapat",
+        "en": "Block apps from location, notifications and account info"
+      },
+      "description": {
+        "tr": "Gizlilik ayarlarındaki dört izni kapatır: bu kullanıcı için konum, uygulama tanılama bilgisi ve hesap bilgisi erişimi; tüm bilgisayar için uygulamaların bildirimlerine erişimi.",
+        "en": "Turns off four permissions in the privacy settings: location, app diagnostic info and account info access for this user, and app access to notifications for the whole PC."
+      },
+      "caution_note": {
+        "tr": "Hava Durumu, Haritalar, saat dilimi ayarı ve 'Cihazımı bul' konumunu bulamaz. Telefon Bağlantısı ve akıllı saat uygulamaları bilgisayarın bildirimlerini okuyamaz. Bir uygulamaya ayrı izin vermek istersen geri al.",
+        "en": "Weather, Maps, the time zone setting and 'Find my device' cannot find your location. Phone Link and smartwatch apps cannot read the PC's notifications. Revert it if you want to give an app its own permission."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\location", "name": "Value", "data": { "type": "sz", "value": "Deny" } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\appDiagnostics", "name": "Value", "data": { "type": "sz", "value": "Deny" } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\userAccountInformation", "name": "Value", "data": { "type": "sz", "value": "Deny" } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\CapabilityAccessManager\\ConsentStore\\userNotificationListener", "name": "Value", "data": { "type": "sz", "value": "Deny" } }
+      ]
+    },
+    {
+      "id": "prv_background_apps_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Arka plan uygulamalarını kapat",
+        "en": "Turn off background apps"
+      },
+      "description": {
+        "tr": "Microsoft Store uygulamalarının (Hava Durumu, Haberler, Fotoğraflar vb.) sen kullanmazken arka planda çalışmasını engeller; arka planda daha az işlem, bellek ve ağ kullanımı olur. Normal masaüstü programları (Steam, Discord, tarayıcılar) etkilenmez. 'Windows uygulamalarının arka planda çalışmasına izin ver' ilkesini 'Reddetmeye zorla' yapar (Windows 10 ve 11) ve Windows 10'daki genel anahtarı kapatır; ayar Ayarlar'da kilitli görünür. Store uygulamaları kapalıyken bildirim gönderemeyebilir.",
+        "en": "Stops Microsoft Store apps (Weather, News, Photos and so on) from running in the background while you are not using them, which means fewer background processes and less memory and network use. Regular desktop programs (Steam, Discord, browsers) are not affected. It sets the 'Let Windows apps run in the background' policy to 'Force Deny' (Windows 10 and 11) and turns off the Windows 10 global switch; the setting shows as locked in Settings. Store apps may not send notifications while they are closed."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\AppPrivacy", "name": "LetAppsRunInBackground", "data": { "type": "dword", "value": 2 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\BackgroundAccessApplications", "name": "GlobalUserDisabled", "data": { "type": "dword", "value": 1 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Search", "name": "BackgroundAppGlobalToggle", "data": { "type": "dword", "value": 0 } }
+      ]
+    },
+    {
+      "id": "prv_error_reporting_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Windows Hata Bildirimi'ni kapat",
+        "en": "Turn off Windows Error Reporting"
+      },
+      "description": {
+        "tr": "Bir program çöktüğünde hata raporunun hazırlanıp Microsoft'a gönderilmesini kapatır (politika ve sistem ayarı). Çökme sonrasında rapor için disk ve işlemci kullanılmaz. Microsoft ve program geliştiricileri senin çökmelerini göremez, 'Çözüm ara' önerileri gelmez.",
+        "en": "Stops Windows from preparing an error report and sending it to Microsoft when a program crashes (policy and system setting). No disk or CPU time is spent on reports after a crash. Microsoft and app developers cannot see your crashes, and you get no 'check for solutions' suggestions."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Error Reporting", "name": "Disabled", "data": { "type": "dword", "value": 1 } },
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Microsoft\\Windows\\Windows Error Reporting", "name": "Disabled", "data": { "type": "dword", "value": 1 } }
+      ]
+    },
+    {
+      "id": "prv_onedrive_off",
+      "category": "privacy",
+      "title": {
+        "tr": "OneDrive'ı politika ile kapat",
+        "en": "Turn off OneDrive by policy"
+      },
+      "description": {
+        "tr": "'OneDrive'ın dosya depolama için kullanılmasını engelle' politikasını açar (DisableFileSyncNGSC = 1): OneDrive açılmaz, eşitleme yapmaz ve Dosya Gezgini'nde görünmez. Bilgisayarındaki dosyalar silinmez. OneDrive'ı tamamen kaldırmak için Araçlar bölümündeki 'OneDrive'ı kaldır' aracını kullan.",
+        "en": "Turns on the 'Prevent the usage of OneDrive for file storage' policy (DisableFileSyncNGSC = 1): OneDrive does not start, does not sync and is hidden in File Explorer. Files on your PC are not deleted. To remove OneDrive completely, use the 'Uninstall OneDrive' tool in the Tools section."
+      },
+      "caution_note": {
+        "tr": "OneDrive'da yedeklenen klasörler (Masaüstü, Belgeler, Resimler) artık eşitlenmez; buluttaki ve diğer cihazlarındaki dosyalar güncellenmez. Yalnızca bulutta tutulan ('isteğe bağlı') dosyalar açılamaz.",
+        "en": "Folders backed up to OneDrive (Desktop, Documents, Pictures) no longer sync; files in the cloud and on your other devices are not updated. Files kept only in the cloud ('on demand') cannot be opened."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\OneDrive", "name": "DisableFileSyncNGSC", "data": { "type": "dword", "value": 1 } }
+      ]
+    },
+    {
+      "id": "prv_settings_sync_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Ayar eşitlemesini kapat",
+        "en": "Turn off settings sync"
+      },
+      "description": {
+        "tr": "Microsoft hesabınla tema, parolalar, dil, erişilebilirlik, Başlat düzeni ve diğer Windows ayarlarının Microsoft sunucularına eşitlenmesini kapatır ('Ayarlarımı eşitle'). Ayarların diğer bilgisayarlarına taşınmaz. Windows 10'da etkilidir; Windows 11 bu seçenekleri 'Windows yedekleme > Tercihlerimi hatırla' altına taşıdı ve bu değerlerin hepsini okumayabilir.",
+        "en": "Stops syncing your theme, passwords, language, accessibility, Start layout and other Windows settings to Microsoft's servers with your Microsoft account ('Sync your settings'). Your settings no longer follow you to other PCs. Effective on Windows 10; Windows 11 moved these options to 'Windows backup > Remember my preferences' and may not read all of these values."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync", "name": "SyncPolicy", "data": { "type": "dword", "value": 5 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\Accessibility", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\AppSync", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\BrowserSettings", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\Credentials", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\DesktopTheme", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\Language", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\PackageState", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\Personalization", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\StartLayout", "name": "Enabled", "data": { "type": "dword", "value": 0 } },
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\SettingSync\\Groups\\Windows", "name": "Enabled", "data": { "type": "dword", "value": 0 } }
+      ]
+    },
+    {
+      "id": "prv_notifications_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Bildirimleri kapat",
+        "en": "Turn off notifications"
+      },
+      "description": {
+        "tr": "Ayarlar > Sistem > Bildirimler'deki ana anahtarı kapatır (ToastEnabled = 0): uygulamalar ve Windows ekranın köşesinde bildirim açmaz, oyun sırasında açılır pencere ve ses gelmez. Mesaj, takvim ve güvenlik uyarılarını da görmezsin; gerekirse Ayarlar'dan tekrar açabilir veya geri alabilirsin.",
+        "en": "Turns off the main switch in Settings > System > Notifications (ToastEnabled = 0): apps and Windows no longer pop up notifications in the corner of the screen, so no pop-ups or sounds interrupt your games. You also miss message, calendar and security alerts; turn it back on in Settings or revert it when needed."
+      },
+      "caution_note": {
+        "tr": "Windows Güvenliği'nin virüs ve tehdit uyarıları ile diğer güvenlik bildirimleri de görünmez; bulunan bir tehdidi ancak Windows Güvenliği'ni açınca görürsün.",
+        "en": "Windows Security virus and threat alerts and other security notifications are hidden too; you only see a detected threat when you open Windows Security."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "reg_set", "hive": "hkcu", "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\PushNotifications", "name": "ToastEnabled", "data": { "type": "dword", "value": 0 } }
+      ]
+    },
+    {
+      "id": "prv_news_interests_off",
+      "category": "privacy",
+      "title": {
+        "tr": "Görev çubuğundaki Haberler ve ilgi alanlarını kapat",
+        "en": "Turn off News and interests on the taskbar"
+      },
+      "description": {
+        "tr": "Windows 10'un görev çubuğundaki hava durumu ve haber akışını (Haberler ve ilgi alanları) politika ile kapatır; arka planda haber yükleyen süreç çalışmaz. Yalnızca Windows 10; Windows 11'deki Widgets için 'Widgets'ı kapat' tweak'ini kullan.",
+        "en": "Turns off the weather and news feed on the Windows 10 taskbar (News and interests) through policy, so the process that loads news in the background no longer runs. Windows 10 only; for Widgets on Windows 11 use the 'Turn off Widgets' tweak."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "max_build": 19045,
+      "ops": [
+        { "op": "reg_set", "hive": "hklm", "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\Windows Feeds", "name": "EnableFeeds", "data": { "type": "dword", "value": 0 } }
+      ]
+    },
+    {
+      "id": "prv_appx_bing",
+      "category": "privacy",
+      "title": {
+        "tr": "Bing Haberler, Hava Durumu, Finans ve Spor uygulamalarını kaldır",
+        "en": "Remove the Bing News, Weather, Finance and Sports apps"
+      },
+      "description": {
+        "tr": "Önceden yüklü gelen Microsoft Haberler, Hava Durumu, Finans (Money) ve Spor uygulamalarını bu kullanıcı için kaldırır. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir. Yüklü olmayanlar atlanır.",
+        "en": "Removes the preinstalled Microsoft News, Weather, Finance (Money) and Sports apps for this user. This cannot be undone; they can be reinstalled from the Microsoft Store. Apps that are not installed are skipped."
+      },
+      "caution_note": {
+        "tr": "Bu uygulamaları kullanıyorsan kaybedersin. Kaldırma geri alınamaz; uygulamaları Microsoft Store'dan tekrar yükleyebilirsin.",
+        "en": "If you use these apps, you lose them. The removal cannot be undone; you can reinstall them from the Microsoft Store."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "Microsoft.BingNews_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.BingWeather_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.BingFinance_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.BingSports_*" }
+      ]
+    },
+    {
+      "id": "prv_appx_junk",
+      "category": "privacy",
+      "title": {
+        "tr": "Gereksiz Microsoft uygulamalarını kaldır",
+        "en": "Remove unneeded Microsoft apps"
+      },
+      "description": {
+        "tr": "Çoğu kişinin kullanmadığı önceden yüklü Microsoft uygulamalarını bu kullanıcı için kaldırır: 3D Builder, İpuçları (Get Started), Office tanıtım uygulaması (Office Hub), Solitaire Collection, Skype (Store sürümü), Kişiler, Haritalar, Karma Gerçeklik Portalı, Geri Bildirim Merkezi, Ücretli Wi-Fi ve Hücresel (OneConnect) ve Cortana. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir. Yüklü olmayanlar atlanır.",
+        "en": "Removes preinstalled Microsoft apps most people do not use, for this user: 3D Builder, Tips (Get Started), the Office promotion app (Office Hub), Solitaire Collection, Skype (Store version), People, Maps, Mixed Reality Portal, Feedback Hub, Paid Wi-Fi & Cellular (OneConnect) and Cortana. This cannot be undone; they can be reinstalled from the Microsoft Store. Apps that are not installed are skipped."
+      },
+      "caution_note": {
+        "tr": "Bu uygulamaları kullanıyorsan kaybedersin. Kaldırma geri alınamaz; uygulamaları Microsoft Store'dan tekrar yükleyebilirsin.",
+        "en": "If you use these apps, you lose them. The removal cannot be undone; you can reinstall them from the Microsoft Store."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "Microsoft.3DBuilder_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.Getstarted_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.MicrosoftOfficeHub_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.MicrosoftSolitaireCollection_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.SkypeApp_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.People_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.WindowsMaps_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.MixedReality.Portal_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.WindowsFeedbackHub_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.OneConnect_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.549981C3F5F10_*" }
+      ]
+    },
+    {
+      "id": "prv_appx_promo",
+      "category": "privacy",
+      "title": {
+        "tr": "Tanıtım amaçlı yüklenen üçüncü taraf uygulamaları kaldır",
+        "en": "Remove promotional third-party apps"
+      },
+      "description": {
+        "tr": "Windows 10'un bazı kurulumlarda kendiliğinden yüklediği tanıtım uygulamalarını bu kullanıcı için kaldırır: Candy Crush Saga, Candy Crush Soda Saga, Shazam, Flipboard, Twitter, iHeartRadio, Duolingo, Photoshop Express, Pandora, Eclipse Manager ve Actipro. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir. Yüklü olmayanlar atlanır.",
+        "en": "Removes the promotional apps that some Windows 10 installs added on their own, for this user: Candy Crush Saga, Candy Crush Soda Saga, Shazam, Flipboard, Twitter, iHeartRadio, Duolingo, Photoshop Express, Pandora, Eclipse Manager and Actipro. This cannot be undone; they can be reinstalled from the Microsoft Store. Apps that are not installed are skipped."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "king.com.CandyCrushSaga_*" },
+        { "op": "appx_remove", "pattern": "king.com.CandyCrushSodaSaga_*" },
+        { "op": "appx_remove", "pattern": "ShazamEntertainmentLtd.Shazam_*" },
+        { "op": "appx_remove", "pattern": "Flipboard.Flipboard_*" },
+        { "op": "appx_remove", "pattern": "9E2F88E3.Twitter_*" },
+        { "op": "appx_remove", "pattern": "ClearChannelRadioDigital.iHeartRadio_*" },
+        { "op": "appx_remove", "pattern": "D5EA27B7.Duolingo-LearnLanguagesforFree_*" },
+        { "op": "appx_remove", "pattern": "AdobeSystemsIncorporated.AdobePhotoshopExpress_*" },
+        { "op": "appx_remove", "pattern": "PandoraMediaInc.29680B314EFC2_*" },
+        { "op": "appx_remove", "pattern": "46928bounde.EclipseManager_*" },
+        { "op": "appx_remove", "pattern": "ActiproSoftwareLLC.562882FEEB491_*" }
+      ]
+    },
+    {
+      "id": "prv_appx_mail_calendar",
+      "category": "privacy",
+      "title": {
+        "tr": "Posta ve Takvim uygulamasını kaldır",
+        "en": "Remove the Mail and Calendar app"
+      },
+      "description": {
+        "tr": "Önceden yüklü Posta ve Takvim uygulamasını (windowscommunicationsapps) bu kullanıcı için kaldırır. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir.",
+        "en": "Removes the preinstalled Mail and Calendar app (windowscommunicationsapps) for this user. This cannot be undone; it can be reinstalled from the Microsoft Store."
+      },
+      "caution_note": {
+        "tr": "Bu uygulamayla okuduğun e-postalar ve takvim bilgisayarda görünmez; Windows takvim açılır penceresindeki etkinlikler de kaybolur. Hesapların sunucuda kalır.",
+        "en": "Mail and calendar you read with this app no longer show on the PC, and events in the Windows calendar flyout disappear. Your accounts stay on the server."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "microsoft.windowscommunicationsapps_*" }
+      ]
+    },
+    {
+      "id": "prv_appx_camera",
+      "category": "privacy",
+      "title": {
+        "tr": "Kamera uygulamasını kaldır",
+        "en": "Remove the Camera app"
+      },
+      "description": {
+        "tr": "Windows Kamera uygulamasını bu kullanıcı için kaldırır. Web kamerası Discord, Zoom ve tarayıcılarda çalışmaya devam eder. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir.",
+        "en": "Removes the Windows Camera app for this user. The webcam keeps working in Discord, Zoom and browsers. This cannot be undone; it can be reinstalled from the Microsoft Store."
+      },
+      "caution_note": {
+        "tr": "Kamera ile fotoğraf/video çekme ve QR kod okuma kaybolur; Windows Hello yüz tanıma etkilenmez.",
+        "en": "Taking photos/videos and scanning QR codes with Camera is gone; Windows Hello face sign-in is not affected."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "Microsoft.WindowsCamera_*" }
+      ]
+    },
+    {
+      "id": "prv_appx_media",
+      "category": "privacy",
+      "title": {
+        "tr": "Medya uygulamalarını kaldır",
+        "en": "Remove the media apps"
+      },
+      "description": {
+        "tr": "Groove Müzik / Medya Oynatıcı (ZuneMusic), Filmler ve TV (ZuneVideo), Clipchamp video düzenleyicisi ve Ses Kaydedici uygulamalarını bu kullanıcı için kaldırır. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir. Yüklü olmayanlar atlanır.",
+        "en": "Removes Groove Music / Media Player (ZuneMusic), Movies & TV (ZuneVideo), the Clipchamp video editor and Sound Recorder for this user. This cannot be undone; they can be reinstalled from the Microsoft Store. Apps that are not installed are skipped."
+      },
+      "caution_note": {
+        "tr": "Windows 11'de ZuneMusic yeni Medya Oynatıcı'dır; MP3 ve video dosyaların için varsayılan oynatıcı kalmayabilir (VLC gibi bir oynatıcı kur). Ses Kaydedici ile kayıt yapamazsın.",
+        "en": "On Windows 11 ZuneMusic is the new Media Player; your MP3 and video files may be left without a default player (install a player such as VLC). You can no longer record with Sound Recorder."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "Microsoft.ZuneMusic_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.ZuneVideo_*" },
+        { "op": "appx_remove", "pattern": "Clipchamp.Clipchamp_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.WindowsSoundRecorder_*" }
+      ]
+    },
+    {
+      "id": "prv_appx_phone_link",
+      "category": "privacy",
+      "title": {
+        "tr": "Telefon Bağlantısı uygulamasını kaldır",
+        "en": "Remove the Phone Link app"
+      },
+      "description": {
+        "tr": "Telefonunu bilgisayara bağlayan Telefon Bağlantısı (Your Phone) uygulamasını bu kullanıcı için kaldırır; arka planda çalışan süreci de gider. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir.",
+        "en": "Removes the Phone Link (Your Phone) app that connects your phone to the PC for this user, along with its background process. This cannot be undone; it can be reinstalled from the Microsoft Store."
+      },
+      "caution_note": {
+        "tr": "Telefon bildirimleri, SMS, aramalar ve fotoğraflar bilgisayarda görünmez.",
+        "en": "Phone notifications, texts, calls and photos no longer show on the PC."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "Microsoft.YourPhone_*" }
+      ]
+    },
+    {
+      "id": "prv_appx_small_apps",
+      "category": "privacy",
+      "title": {
+        "tr": "Saat, Yapışkan Notlar, To Do, OneNote ve Power Automate'i kaldır",
+        "en": "Remove Clock, Sticky Notes, To Do, OneNote and Power Automate"
+      },
+      "description": {
+        "tr": "Önceden yüklü Saat ve Alarmlar, Yapışkan Notlar, Microsoft To Do, OneNote for Windows 10 ve Power Automate uygulamalarını bu kullanıcı için kaldırır. Bu işlem geri alınamaz; Microsoft Store'dan tekrar yüklenebilir. Yüklü olmayanlar atlanır.",
+        "en": "Removes the preinstalled Clock and Alarms, Sticky Notes, Microsoft To Do, OneNote for Windows 10 and Power Automate apps for this user. This cannot be undone; they can be reinstalled from the Microsoft Store. Apps that are not installed are skipped."
+      },
+      "caution_note": {
+        "tr": "Alarmlar, zamanlayıcılar ve Odaklanma oturumları (Saat) çalışmaz. Kaydedilmiş notlar ve görevler hesabında durur ama bu uygulamalarla açılamaz.",
+        "en": "Alarms, timers and Focus sessions (Clock) stop working. Saved notes and tasks stay in your account but cannot be opened with these apps."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [
+        { "op": "appx_remove", "pattern": "Microsoft.WindowsAlarms_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.MicrosoftStickyNotes_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.Todos_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.Office.OneNote_*" },
+        { "op": "appx_remove", "pattern": "Microsoft.PowerAutomateDesktop_*" }
+      ]
+    }
+  ]
+}

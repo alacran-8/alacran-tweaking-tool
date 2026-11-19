@@ -1,0 +1,58 @@
+{
+  "tweaks": [
+    {
+      "id": "usb_selective_suspend_off",
+      "category": "usb",
+      "title": {
+        "tr": "USB seçici askıya almayı kapat",
+        "en": "Turn off USB selective suspend"
+      },
+      "description": {
+        "tr": "Etkin güç planında, prize takılıyken 'USB ayarları > USB seçici askıya alma ayarı'nı 'Devre dışı' yapar; Windows boştaki USB cihazlarını artık askıya almaz. Geç uyanan veya bağlantısı kopan cihazları (örneğin bazı kulaklıklar, kablosuz alıcılar, yakalama kartları) önler. Kullanımdaki fare ve klavyeler zaten askıya alınmaz. Plan değiştirirsen yeni planda tekrar uygulaman gerekir.",
+        "en": "Sets 'USB settings > USB selective suspend setting' to 'Disabled' for plugged-in use in the active power plan, so Windows no longer suspends idle USB devices. This avoids devices that wake up late or disconnect (for example some headsets, wireless receivers and capture cards). A mouse or keyboard in use is not suspended anyway. If you switch power plans, apply it again in the new plan."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "power_value",
+          "subgroup": "2a737441-1930-4402-8d77-b2bebba308a3",
+          "setting": "48e6b7a6-50f5-4782-a5d4-53bb8f07e226",
+          "ac": 0,
+          "dc": null
+        }
+      ]
+    },
+    {
+      "id": "usb_hub_power_off",
+      "category": "usb",
+      "title": {
+        "tr": "USB denetleyici ve hub güç tasarrufunu kapat",
+        "en": "Turn off power saving on USB controllers and hubs"
+      },
+      "description": {
+        "tr": "Takılı her USB 3 (xHCI) denetleyicisi ve hub'ında Aygıt Yöneticisi > Güç Yönetimi > 'Bilgisayar güç tasarrufu için bu aygıtı kapatabilir' seçeneğini kaldırır (Device Parameters\\WDF IdleInWorkingState = 0). Denetleyiciler ve hub'lar bilgisayar açıkken hep güçte kalır; bu, boşta kaldıktan sonra bağlantısı kopan veya geç tepki veren USB cihazlarını düzeltebilir. Dizüstülerde biraz daha fazla güç harcar. Yeniden başlatma önerilir.",
+        "en": "On every present USB 3 (xHCI) controller and hub, clears Device Manager > Power Management > 'Allow the computer to turn off this device to save power' (Device Parameters\\WDF IdleInWorkingState = 0). The controllers and hubs stay powered while the PC is on, which can fix USB devices that disconnect or respond late after being idle. Uses a little more power on laptops. Restart recommended."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "device_reg",
+          "class": "usb",
+          "suffix": "Device Parameters\\WDF",
+          "name": "IdleInWorkingState",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    }
+  ]
+}

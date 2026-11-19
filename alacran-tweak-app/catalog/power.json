@@ -1,0 +1,99 @@
+{
+  "tweaks": [
+    {
+      "id": "pow_hibernate_off",
+      "category": "power",
+      "title": {
+        "tr": "Hazırda bekletmeyi ve Hızlı Başlatma'yı kapat",
+        "en": "Turn off hibernation and Fast Startup"
+      },
+      "description": {
+        "tr": "Hazırda bekletmeyi kapatır; yeniden başlattıktan sonra Windows hiberfil.sys dosyasını kullanmaz ve genellikle birkaç GB (varsayılan olarak RAM'in yaklaşık %40'ı) disk alanı boşalır. Hızlı Başlatma da kapanır: 'Kapat' dediğinde Windows çekirdeği ve sürücüleri gerçekten kapatıp sıfırdan başlatır, bu da uzun süre açık kalan sürücü sorunlarını önler. Oyun FPS'ini doğrudan artırmaz. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off hibernation; after a restart Windows no longer uses hiberfil.sys, which frees disk space, often several GB (about 40% of RAM by default). Fast Startup is turned off too: 'Shut down' then really stops the kernel and drivers and starts them fresh, which avoids driver problems that build up over long uptimes. It does not raise game FPS directly. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Hazırda bekletme seçeneği kaybolur ve açılış birkaç saniye uzayabilir (Hızlı Başlatma yok). Dizüstünde pil kritik seviyeye düştüğünde bilgisayar hazırda beklemeye geçmek yerine kapanır; kaydedilmemiş işler kaybolabilir.",
+        "en": "The Hibernate option disappears and boot can take a few seconds longer (no Fast Startup). On a laptop, a critically low battery shuts the PC down instead of hibernating it, so unsaved work can be lost."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Power",
+          "name": "HibernateEnabled",
+          "data": { "type": "dword", "value": 0 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Power",
+          "name": "HiberbootEnabled",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "pow_sata_link_power_off",
+      "category": "power",
+      "title": {
+        "tr": "SATA disk bağlantısı güç tasarrufunu kapat",
+        "en": "Turn off SATA drive link power saving"
+      },
+      "description": {
+        "tr": "Etkin güç planında, prize takılıyken 'AHCI Link Power Management - HIPM/DIPM' ayarını 'Active' yapar: SATA SSD ve HDD bağlantısı boştayken uyumaz, ilk okuma/yazmada uyanma gecikmesi olmaz. Yalnızca SATA (AHCI) diskleri etkiler; NVMe SSD'lere etkisi yoktur. Disk boştayken biraz daha fazla güç harcar. Plan değiştirirsen yeni planda tekrar uygulaman gerekir.",
+        "en": "Sets 'AHCI Link Power Management - HIPM/DIPM' to 'Active' for plugged-in use in the active power plan: the SATA SSD/HDD link no longer sleeps when idle, so there is no wake-up delay on the first read or write. Only affects SATA (AHCI) drives; it has no effect on NVMe SSDs. The drive uses a bit more power when idle. If you switch power plans, apply it again in the new plan."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "power_value",
+          "subgroup": "0012ee47-9041-4b5d-9b77-535fba8b1442",
+          "setting": "0b2d69d7-a2a1-449c-9680-f91c70521c60",
+          "ac": 0,
+          "dc": null
+        }
+      ]
+    },
+    {
+      "id": "pow_usb3_link_power_off",
+      "category": "power",
+      "title": {
+        "tr": "USB 3 bağlantı güç yönetimini kapat",
+        "en": "Turn off USB 3 link power management"
+      },
+      "description": {
+        "tr": "Etkin güç planında, prize takılıyken 'USB 3 Link Power Management' ayarını 'Kapalı' yapar: USB 3 bağlantıları boştayken düşük güç durumuna (U1/U2) geçmez, uyanma gecikmesi ve bazı cihazlarda görülen kopmalar önlenir. Yalnızca USB 3 cihazları etkiler; çoğu fare ve klavye USB 2 olduğu için onlarda fark olmaz. Plan değiştirirsen yeni planda tekrar uygulaman gerekir.",
+        "en": "Sets 'USB 3 Link Power Management' to 'Off' for plugged-in use in the active power plan: USB 3 links no longer drop into low-power states (U1/U2) when idle, which avoids wake-up delays and the disconnects some devices show. Only affects USB 3 devices; most mice and keyboards are USB 2, so they see no difference. If you switch power plans, apply it again in the new plan."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "power_value",
+          "subgroup": "2a737441-1930-4402-8d77-b2bebba308a3",
+          "setting": "d4e98f31-5ffe-4ce1-be31-1b38b384c009",
+          "ac": 0,
+          "dc": null
+        }
+      ]
+    }
+  ]
+}

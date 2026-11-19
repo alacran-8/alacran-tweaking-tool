@@ -1,0 +1,103 @@
+{
+  "tweaks": [
+    {
+      "id": "cln_user_temp",
+      "category": "cleanup",
+      "title": {
+        "tr": "Kullanıcı geçici dosyalarını temizle",
+        "en": "Clean user temporary files"
+      },
+      "description": {
+        "tr": "Programların kendi geçici klasörüne (%TEMP%) bıraktığı dosyaları siler ve disk alanı açar. Kullanımda olan dosyalar atlanır. Silinen dosyalar geri alınamaz.",
+        "en": "Deletes the files programs left in your temporary folder (%TEMP%) and frees disk space. Files in use are skipped. Deleted files cannot be restored."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [{ "op": "cleanup", "target": "user_temp" }]
+    },
+    {
+      "id": "cln_windows_temp",
+      "category": "cleanup",
+      "title": {
+        "tr": "Windows geçici dosyalarını temizle",
+        "en": "Clean Windows temporary files"
+      },
+      "description": {
+        "tr": "Windows ve servislerin C:\\Windows\\Temp klasörüne bıraktığı geçici dosyaları siler ve disk alanı açar. Kullanımda olan dosyalar atlanır. Silinen dosyalar geri alınamaz.",
+        "en": "Deletes the temporary files Windows and its services left in C:\\Windows\\Temp and frees disk space. Files in use are skipped. Deleted files cannot be restored."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [{ "op": "cleanup", "target": "windows_temp" }]
+    },
+    {
+      "id": "cln_update_download",
+      "category": "cleanup",
+      "title": {
+        "tr": "İndirilmiş Windows Update dosyalarını temizle",
+        "en": "Clean downloaded Windows Update files"
+      },
+      "description": {
+        "tr": "Windows Update'in indirip kurduğu güncelleme paketlerini (SoftwareDistribution\\Download) siler; birkaç GB yer açabilir. Güncelleme geçmişi korunur. Kurulmayı bekleyen bir güncelleme varsa yeniden indirilir. Kullanımda olan dosyalar atlanır. Silinen dosyalar geri alınamaz.",
+        "en": "Deletes the update packages Windows Update downloaded (SoftwareDistribution\\Download); this can free several GB. Update history is kept. An update that is still waiting to be installed is downloaded again. Files in use are skipped. Deleted files cannot be restored."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [{ "op": "cleanup", "target": "update_download" }]
+    },
+    {
+      "id": "cln_thumbnail_cache",
+      "category": "cleanup",
+      "title": {
+        "tr": "Küçük resim önbelleğini temizle",
+        "en": "Clean the thumbnail cache"
+      },
+      "description": {
+        "tr": "Dosya Gezgini'nin resim ve video önizlemeleri için tuttuğu önbelleği (thumbcache) siler. Bozuk veya yanlış görünen küçük resimleri düzeltir. Windows önizlemeleri klasörü ilk açtığında yeniden oluşturur, bu yüzden büyük klasörler bir süre yavaş açılabilir. Kullanımda olan dosyalar atlanır.",
+        "en": "Deletes the cache File Explorer keeps for image and video previews (thumbcache). This fixes broken or wrong thumbnails. Windows rebuilds the previews the first time a folder is opened, so large folders can open slowly for a while. Files in use are skipped."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [{ "op": "cleanup", "target": "thumb_cache" }]
+    },
+    {
+      "id": "cln_recycle_bin",
+      "category": "cleanup",
+      "title": {
+        "tr": "Geri Dönüşüm Kutusu'nu boşalt",
+        "en": "Empty the Recycle Bin"
+      },
+      "description": {
+        "tr": "Geri Dönüşüm Kutusu'ndaki tüm dosyaları kalıcı olarak siler ve kapladıkları alanı açar.",
+        "en": "Permanently deletes all files in the Recycle Bin and frees the space they use."
+      },
+      "caution_note": {
+        "tr": "Geri Dönüşüm Kutusu'ndaki tüm dosyalar kalıcı olarak silinir ve geri alınamaz. Önce içinde lazım olan bir şey olmadığını kontrol et.",
+        "en": "All files in the Recycle Bin are permanently deleted and cannot be restored. Check first that there is nothing in it you still need."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": true,
+      "min_build": 19044,
+      "ops": [{ "op": "cleanup", "target": "recycle_bin" }]
+    }
+  ]
+}

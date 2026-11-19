@@ -1,0 +1,146 @@
+{
+  "tweaks": [
+    {
+      "id": "svc_telemetry_off",
+      "category": "services",
+      "title": {
+        "tr": "Telemetri servislerini kapat",
+        "en": "Turn off the telemetry services"
+      },
+      "description": {
+        "tr": "Tanılama verilerini toplayıp Microsoft'a gönderen 'Bağlı Kullanıcı Deneyimleri ve Telemetri' (DiagTrack) servisini ve onun mesaj yönlendiricisi dmwappushservice'i devre dışı bırakır. DiagTrack sürekli arka planda çalışır; kapatınca biraz bellek ve ara sıra disk/ağ kullanımı azalır, FPS'e doğrudan etkisi yoktur. İş veya okul tarafından yönetilen (MDM/Intune) bilgisayarlarda dmwappushservice kapalıyken ilkelerin anlık eşitlemesi çalışmaz. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Disables the 'Connected User Experiences and Telemetry' service (DiagTrack), which collects diagnostic data and sends it to Microsoft, and its message router dmwappushservice. DiagTrack always runs in the background; turning it off saves a little memory and the occasional disk/network use. It has no direct effect on FPS. On work- or school-managed (MDM/Intune) PCs, push sync of policies stops working while dmwappushservice is off. Takes effect after a restart."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "service_start", "name": "DiagTrack", "start": 4 },
+        { "op": "service_start", "name": "dmwappushservice", "start": 4 }
+      ]
+    },
+    {
+      "id": "svc_diagnostics_off",
+      "category": "services",
+      "title": {
+        "tr": "Tanılama servislerini kapat",
+        "en": "Turn off the diagnostic services"
+      },
+      "description": {
+        "tr": "Tanılama İlkesi Servisi (DPS), onun başlattığı Tanılama Hizmeti/Sistem Ana Bilgisayarı (WdiServiceHost, WdiSystemHost), Tanılama Yürütme Servisi (diagsvc) ve Visual Studio tanılama toplayıcısını (diagnosticshub.standardcollector.service) devre dışı bırakır. Yalnızca DPS sürekli çalışır; kazanç biraz bellektir, oyun performansına ölçülebilir etkisi yoktur. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Disables the Diagnostic Policy Service (DPS), the Diagnostic Service/System Hosts it starts (WdiServiceHost, WdiSystemHost), the Diagnostic Execution Service (diagsvc) and the Visual Studio diagnostics collector (diagnosticshub.standardcollector.service). Only DPS runs all the time; the gain is a little memory, with no measurable effect on game performance. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Windows sorun gidericileri ve ağ tanılaması ('Sorunları gider') çalışmaz, Görev Yöneticisi'ndeki 'Uygulama geçmişi' ve pil kullanımı bilgileri güncellenmez. Visual Studio'nun tanılama araçları da çalışmaz.",
+        "en": "Windows troubleshooters and network diagnostics ('Troubleshoot problems') stop working, and Task Manager's 'App history' and battery usage data stop updating. Visual Studio's diagnostic tools stop working too."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "service_start", "name": "DPS", "start": 4 },
+        { "op": "service_start", "name": "WdiServiceHost", "start": 4 },
+        { "op": "service_start", "name": "WdiSystemHost", "start": 4 },
+        { "op": "service_start", "name": "diagsvc", "start": 4 },
+        { "op": "service_start", "name": "diagnosticshub.standardcollector.service", "start": 4 }
+      ]
+    },
+    {
+      "id": "svc_print_spooler_off",
+      "category": "services",
+      "title": {
+        "tr": "Yazdırma servislerini kapat",
+        "en": "Turn off the print services"
+      },
+      "description": {
+        "tr": "Yazdırma Biriktiricisi (Spooler) ve yazıcı bildirim servisini (PrintNotify) devre dışı bırakır. Spooler her zaman çalışır ve geçmişte saldırılarda kullanıldı (PrintNightmare); yazıcı kullanmıyorsan kapatmak biraz bellek kazandırır ve saldırı yüzeyini küçültür. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Disables the Print Spooler (Spooler) and the printer notification service (PrintNotify). Spooler always runs and has been used in attacks (PrintNightmare); if you do not print, turning it off saves a little memory and shrinks the attack surface. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Hiçbir şey yazdırılamaz: yazıcılar, 'Microsoft Print to PDF' ve faks çalışmaz, bazı programların yazdırma/PDF'ye aktarma menüleri hata verir. Yazdırman gerektiğinde geri al.",
+        "en": "Nothing can be printed: printers, 'Microsoft Print to PDF' and fax stop working, and the print/export-to-PDF menus of some programs show errors. Revert it when you need to print."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        { "op": "service_start", "name": "Spooler", "start": 4 },
+        { "op": "service_start", "name": "PrintNotify", "start": 4 }
+      ]
+    },
+    {
+      "id": "svc_wu_drivers_off",
+      "category": "services",
+      "title": {
+        "tr": "Windows Update ile sürücü yüklenmesini kapat",
+        "en": "Stop Windows Update from installing drivers"
+      },
+      "description": {
+        "tr": "Windows Update'in kalite güncellemeleriyle sürücü indirmesini engeller (ExcludeWUDriversInQualityUpdate politikası) ve yeni bir aygıt takıldığında Windows Update'te sürücü aranmasını kapatır (SearchOrderConfig = 0). Böylece kendi kurduğun ekran kartı sürücüsünün Windows tarafından eskisiyle değiştirilmesi önlenir. Windows güvenlik güncellemeleri etkilenmez.",
+        "en": "Stops Windows Update from delivering drivers with quality updates (the ExcludeWUDriversInQualityUpdate policy) and stops Windows from looking for drivers on Windows Update when a new device is connected (SearchOrderConfig = 0). This keeps Windows from replacing the graphics driver you installed with an older one. Windows security updates are not affected."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate",
+          "name": "ExcludeWUDriversInQualityUpdate",
+          "data": { "type": "dword", "value": 1 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\DriverSearching",
+          "name": "SearchOrderConfig",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "svc_auto_update_off",
+      "category": "services",
+      "title": {
+        "tr": "Otomatik Windows güncellemelerini kapat",
+        "en": "Turn off automatic Windows updates"
+      },
+      "description": {
+        "tr": "'Otomatik Güncelleştirmeleri Yapılandır' politikasıyla otomatik güncellemeyi kapatır (NoAutoUpdate = 1). Windows oyun sırasında arka planda güncelleme indirip kurmaz ve kendiliğinden yeniden başlatmaz. Ayarlar > Windows Update'ten 'Güncelleştirmeleri denetle' ile elle güncellemeye devam edebilirsin.",
+        "en": "Turns off automatic updates through the 'Configure Automatic Updates' policy (NoAutoUpdate = 1). Windows no longer downloads and installs updates in the background during games and does not restart on its own. You can still update by hand with 'Check for updates' in Settings > Windows Update."
+      },
+      "caution_note": {
+        "tr": "Güvenlik riski: güvenlik açıklarını kapatan güncellemeler artık kendiliğinden gelmez. Elle düzenli olarak (en az ayda bir) güncelleme yapmazsan bilgisayarın bilinen saldırılara açık kalır. Bazı sürümler ve kurumsal yönetim bu politikayı yok sayabilir.",
+        "en": "Security risk: updates that fix security holes no longer arrive on their own. If you do not update by hand regularly (at least once a month), your PC stays open to known attacks. Some editions and enterprise management may ignore this policy."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\AU",
+          "name": "NoAutoUpdate",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    }
+  ]
+}

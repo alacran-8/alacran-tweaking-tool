@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Alacran Tweak Tool",
+  "version": "2.0.0",
+  "identifier": "com.alacran.tweak",
+  "build": {
+    "beforeDevCommand": "npm run dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "npm run build",
+    "frontendDist": "../dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Alacran Tweak Tool",
+        "decorations": false,
+        "width": 1180,
+        "height": 760,
+        "minWidth": 980,
+        "minHeight": 640,
+        "center": true,
+        "transparent": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src ipc: http://ipc.localhost"
+    }
+  },
+  "bundle": {
+    "active": false,
+    "publisher": "Alacran",
+    "copyright": "© 2026 Alacran",
+    "shortDescription": "Alacran Tweak Tool",
+    "icon": ["icons/icon.ico"]
+  }
+}

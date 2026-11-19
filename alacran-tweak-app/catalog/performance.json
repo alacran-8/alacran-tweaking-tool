@@ -1,0 +1,295 @@
+{
+  "tweaks": [
+    {
+      "id": "perf_svchost_split",
+      "category": "performance",
+      "title": {
+        "tr": "Servis işlemlerini (svchost) grupla",
+        "en": "Group service host (svchost) processes"
+      },
+      "description": {
+        "tr": "SvcHostSplitThresholdInKB değerini RAM miktarına eşitler; böylece Windows servisleri yeniden daha az sayıda svchost.exe işleminde toplar (Windows 10 1703'ten beri, 3,5 GB'tan fazla RAM'de çoğu servisi ayrı svchost'ta çalıştırır). Uygulama, takılı RAM'e uyan seçeneği kendisi seçer. Etkisi görseldir: Görev Yöneticisi'nde çok daha az svchost görünür ve RAM kullanımı biraz düşer; FPS ve giriş gecikmesi değişmez. Gruplanınca, çöken bir servis aynı gruptaki diğer servisleri de durdurabilir. Yeniden başlatma gerekir.",
+        "en": "Sets SvcHostSplitThresholdInKB to your RAM size, so Windows groups services into fewer svchost.exe processes again (since Windows 10 1703 it runs most services in their own svchost when the PC has more than 3.5 GB of RAM). The app picks the option that matches your installed RAM. The effect is cosmetic: Task Manager shows far fewer svchost processes and RAM use drops slightly; FPS and input delay do not change. When grouped, a crashing service can take the other services of its group down with it. Restart required."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "options": [
+        {
+          "id": "4gb",
+          "label": { "tr": "4 GB RAM", "en": "4 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 4194304 }
+            }
+          ]
+        },
+        {
+          "id": "6gb",
+          "label": { "tr": "6 GB RAM", "en": "6 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 6291456 }
+            }
+          ]
+        },
+        {
+          "id": "8gb",
+          "label": { "tr": "8 GB RAM", "en": "8 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 8388608 }
+            }
+          ]
+        },
+        {
+          "id": "12gb",
+          "label": { "tr": "12 GB RAM", "en": "12 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 12582912 }
+            }
+          ]
+        },
+        {
+          "id": "16gb",
+          "label": { "tr": "16 GB RAM", "en": "16 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 16777216 }
+            }
+          ]
+        },
+        {
+          "id": "24gb",
+          "label": { "tr": "24 GB RAM", "en": "24 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 25165824 }
+            }
+          ]
+        },
+        {
+          "id": "32gb",
+          "label": { "tr": "32 GB RAM", "en": "32 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 33554432 }
+            }
+          ]
+        },
+        {
+          "id": "48gb",
+          "label": { "tr": "48 GB RAM", "en": "48 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 50331648 }
+            }
+          ]
+        },
+        {
+          "id": "64gb",
+          "label": { "tr": "64 GB RAM", "en": "64 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 67108864 }
+            }
+          ]
+        },
+        {
+          "id": "96gb",
+          "label": { "tr": "96 GB RAM", "en": "96 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 100663296 }
+            }
+          ]
+        },
+        {
+          "id": "128gb",
+          "label": { "tr": "128 GB RAM", "en": "128 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 134217728 }
+            }
+          ]
+        },
+        {
+          "id": "256gb",
+          "label": { "tr": "256 GB RAM", "en": "256 GB RAM" },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Control",
+              "name": "SvcHostSplitThresholdInKB",
+              "data": { "type": "dword", "value": 268435456 }
+            }
+          ]
+        }
+      ],
+      "auto_option": "ram_gb"
+    },
+    {
+      "id": "perf_memory_integrity_off",
+      "category": "performance",
+      "title": {
+        "tr": "Bellek bütünlüğünü (HVCI) kapat",
+        "en": "Turn off Memory integrity (HVCI)"
+      },
+      "description": {
+        "tr": "Windows Güvenliği > Cihaz güvenliği > Çekirdek yalıtımı > Bellek bütünlüğü'nü kapatır (HypervisorEnforcedCodeIntegrity Enabled = 0). Microsoft, Windows 11'de oyun performansı için bunu kendisi seçenek olarak gösterir; kazanç işlemciye ve oyuna göre değişir, çoğunlukla birkaç yüzdedir ve en çok eski işlemcilerde görülür. Yeniden başlatma gerekir.",
+        "en": "Turns off Windows Security > Device security > Core isolation > Memory integrity (HypervisorEnforcedCodeIntegrity Enabled = 0). Microsoft itself lists this as an option for gaming performance on Windows 11; the gain depends on the CPU and the game, is usually a few percent and shows mostly on older CPUs. Restart required."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Bellek bütünlüğü, kötü amaçlı veya açığı olan sürücülerin Windows çekirdeğinde kod çalıştırmasını engeller; kapatmak bu korumayı azaltır. Windows Güvenliği uyarı gösterir. Bazı hile önleme sistemleri bunun açık olmasını isteyebilir. Bir kuruluş ilkesi bunu açıyorsa bu ayarın üzerine yazılır. 'Hyper-V hipervizörünü ve VBS'yi kapat' tweak'i de bellek bütünlüğünü kapatır.",
+        "en": "Memory integrity stops malicious or vulnerable drivers from running code in the Windows kernel; turning it off lowers that protection. Windows Security shows a warning. Some anti-cheat systems can require it to be on. If an organisation policy turns it on, this setting is overwritten. The 'Turn off the Hyper-V hypervisor and VBS' tweak also turns memory integrity off."
+      },
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\DeviceGuard\\Scenarios\\HypervisorEnforcedCodeIntegrity",
+          "name": "Enabled",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "perf_search_indexer_off",
+      "category": "performance",
+      "title": {
+        "tr": "Windows Search dizinleyicisini kapat",
+        "en": "Turn off the Windows Search indexer"
+      },
+      "description": {
+        "tr": "Dosyaları arka planda dizine ekleyen Windows Search hizmetini (WSearch) devre dışı bırakır. Özellikle HDD'lerde veya çok dosya kopyaladıktan sonra görülen ara sıra arka plan disk ve işlemci kullanımı durur. Hizmet yeniden başlatmadan sonra çalışmaz.",
+        "en": "Disables the Windows Search service (WSearch), which indexes files in the background. This stops the occasional background disk and CPU use, seen mostly on HDDs or after copying many files. The service no longer runs after a restart."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Başlat, Dosya Gezgini, Outlook ve Ayarlar'da arama çok yavaşlar; dosya içerikleri ve e-postalar gibi bazı sonuçlar artık bulunmaz.",
+        "en": "Search in Start, File Explorer, Outlook and Settings becomes much slower, and some results (file contents, e-mail) are no longer found."
+      },
+      "ops": [
+        {
+          "op": "service_start",
+          "name": "WSearch",
+          "start": 4
+        }
+      ]
+    },
+    {
+      "id": "perf_startup_delay_off",
+      "category": "performance",
+      "title": {
+        "tr": "Başlangıç uygulamaları gecikmesini kaldır",
+        "en": "Remove the startup apps delay"
+      },
+      "description": {
+        "tr": "Windows, oturum açtıktan sonra Başlangıç'taki uygulamaları başlatmadan önce birkaç saniye bekler. Bu ayar beklemeyi kaldırır (Explorer\\Serialize StartupDelayInMSec = 0); başlangıç uygulamaları hemen açılır. Masaüstü biraz daha erken hazır olur; çok başlangıç uygulaması olan yavaş HDD'li bilgisayarlarda oturum açılışı kısa bir süre daha yoğun hissedilebilir. Bilgisayar açıldıktan sonra etkisi yoktur.",
+        "en": "Windows waits a few seconds after you sign in before it starts the apps in Startup. This removes that wait (Explorer\\Serialize StartupDelayInMSec = 0), so startup apps open right away. The desktop is ready a little sooner; on slow HDD PCs with many startup apps sign-in can feel busier for a moment. There is no effect once the PC has started."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Serialize",
+          "name": "StartupDelayInMSec",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "perf_paging_executive_off",
+      "category": "performance",
+      "title": {
+        "tr": "Çekirdek kodunu RAM'de tut",
+        "en": "Keep kernel code in RAM"
+      },
+      "description": {
+        "tr": "Windows'a çekirdek modu sürücülerini ve sistem kodunu sayfa dosyasına taşımamasını söyler (DisablePagingExecutive = 1). Yeterli RAM'i olan bilgisayarlarda bu kod zaten nadiren dışarı alınır, bu yüzden etkisi küçüktür; bellek sıkışıkken bilgisayar boşta kaldıktan sonraki kısa takılmaları önleyebilir. Biraz daha fazla RAM kullanır. Yeniden başlatma gerekir.",
+        "en": "Tells Windows not to move kernel-mode drivers and system code to the page file (DisablePagingExecutive = 1). On PCs with enough RAM this code is rarely paged out anyway, so the effect is small; it can avoid a short stall after the PC has been idle while memory was tight. Uses slightly more RAM. Restart required."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Memory Management",
+          "name": "DisablePagingExecutive",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    }
+  ]
+}

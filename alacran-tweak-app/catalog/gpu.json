@@ -1,0 +1,97 @@
+{
+  "tweaks": [
+    {
+      "id": "gpu_hags_on",
+      "category": "gpu",
+      "title": {
+        "tr": "Donanım hızlandırmalı GPU zamanlamasını aç",
+        "en": "Turn on hardware-accelerated GPU scheduling"
+      },
+      "description": {
+        "tr": "Ayarlar > Sistem > Ekran > Grafik altındaki 'Donanım hızlandırmalı GPU zamanlaması' seçeneğini açar (HwSchMode = 2). Ekran kartı kendi iş kuyruğunu kendisi yönetir; işlemci yükü biraz azalır ve bazı oyunlarda gecikme düşer. DLSS Kare Oluşturma (Frame Generation) için gereklidir. Ekran kartının ve sürücünün bu özelliği desteklemesi gerekir, desteklemiyorsa Windows ayarı yok sayar. Windows 11 birçok yeni bilgisayarda bunu zaten açık getirir. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns on 'Hardware-accelerated GPU scheduling' under Settings > System > Display > Graphics (HwSchMode = 2). The graphics card manages its own work queue, which slightly lowers CPU overhead and can lower latency in some games. DLSS Frame Generation requires it. Your graphics card and driver must support it; if they do not, Windows ignores the setting. Windows 11 already turns it on by default on many newer PCs. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Her sistemde fayda sağlamaz: bazı bilgisayarlarda takılma, VR sorunları veya eski kayıt/yayın programlarında hata görülebilir. Yeniden başlattıktan sonra oyunlar takılıyorsa geri al.",
+        "en": "It does not help on every system: some PCs see stutter, VR problems or errors in older recording/streaming software. If games stutter after the restart, revert it."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Control\\GraphicsDrivers",
+          "name": "HwSchMode",
+          "data": { "type": "dword", "value": 2 }
+        }
+      ]
+    },
+    {
+      "id": "gpu_msi_mode",
+      "category": "gpu",
+      "title": {
+        "tr": "Ekran kartında MSI kesme modunu aç",
+        "en": "Turn on MSI interrupt mode for the graphics card"
+      },
+      "description": {
+        "tr": "Takılı her ekran kartının (dahili grafik dahil) eski hat tabanlı kesmeler yerine mesaj tabanlı kesmeleri (MSI) kullanmasını ister (MSISupported = 1). Kesme paylaşımını önler ve bazı sistemlerde DPC gecikmesini düşürür. Güncel NVIDIA, AMD ve Intel sürücüleri çoğu kartta MSI'yı zaten kullanır; o durumda hiçbir şey değişmez. Kart MSI desteklemiyorsa Windows ayarı yok sayar. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Asks every installed graphics adapter (integrated graphics included) to use message-signaled interrupts (MSI) instead of legacy line-based interrupts (MSISupported = 1). It avoids interrupt sharing and can lower DPC latency on some systems. Current NVIDIA, AMD and Intel drivers already use MSI on most cards; then nothing changes. If the card does not support MSI, Windows ignores the setting. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Eski bir kart veya sürücü MSI ile düzgün çalışmazsa yeniden başlattıktan sonra siyah ekran ya da sürücü hatası görülebilir; bu durumda Güvenli Mod'da açıp geri al. Sürücüyü temiz kurulumla (ör. DDU) yeniden yüklemek ayarı sıfırlayabilir.",
+        "en": "If an old card or driver does not handle MSI well, you can get a black screen or driver errors after the restart; then start in Safe Mode and revert it. A clean driver reinstall (e.g. with DDU) can reset the setting."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "device_reg",
+          "class": "display",
+          "suffix": "Device Parameters\\Interrupt Management\\MessageSignaledInterruptProperties",
+          "name": "MSISupported",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    },
+    {
+      "id": "gpu_mpo_off",
+      "category": "gpu",
+      "title": {
+        "tr": "Çok düzlemli kaplamayı (MPO) kapat",
+        "en": "Turn off Multiplane Overlay (MPO)"
+      },
+      "description": {
+        "tr": "Masaüstü pencere yöneticisinde (DWM) Multiplane Overlay özelliğini kapatır (Dwm OverlayTestMode = 5). Bu, NVIDIA'nın bazı sistemlerde, özellikle birden fazla monitörde görülen titreme, siyah ekran ve tarayıcı/video/oyun takılmaları için yayımladığı geçici çözümün aynısıdır. Esas olarak Windows 10 ve ilk Windows 11 sürümlerinde işe yarar; Windows 11 22H2 ve sonrasında bu değer genellikle yok sayılır, orada bir değişiklik bekleme. Yalnızca bu sorunları yaşıyorsan uygula; sorunsuz bir sistemde performans kazandırmaz. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off Multiplane Overlay in the Desktop Window Manager (Dwm OverlayTestMode = 5). It is the same workaround NVIDIA published for flickering, black screens and stutter in browsers, videos and games on some systems, especially with several monitors. It mainly works on Windows 10 and early Windows 11; on Windows 11 22H2 and later this value is usually ignored, so expect no change there. Only apply it if you have those problems; on a system without them it gains no performance. Takes effect after a restart."
+      },
+      "caution_note": {
+        "tr": "Windows 11 22H2 ve sonrasında genellikle hiçbir şey değiştirmez. Çalıştığı sistemlerde: MPO, pencereli ve çerçevesiz oyunların görüntüyü doğrudan ekrana vermesini sağlar; kapatınca bu oyunlarda gecikme ve GPU kullanımı artabilir.",
+        "en": "On Windows 11 22H2 and later it usually changes nothing. Where it does apply: MPO lets windowed and borderless games present directly to the screen; turning it off can raise latency and GPU usage in those games."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows\\Dwm",
+          "name": "OverlayTestMode",
+          "data": { "type": "dword", "value": 5 }
+        }
+      ]
+    }
+  ]
+}

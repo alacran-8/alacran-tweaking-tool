@@ -1,0 +1,116 @@
+{
+  "tweaks": [
+    {
+      "id": "new_windowed_game_opt",
+      "category": "game",
+      "title": { "tr": "Pencereli oyun optimizasyonu", "en": "Windowed game optimization" },
+      "description": {
+        "tr": "Pencereli ve çerçevesiz (borderless) DirectX 10/11 oyunlarında gecikmeyi düşürür. Mevcut DirectX tercihlerin korunur. Yalnızca Windows 11.",
+        "en": "Lowers input latency in windowed and borderless DirectX 10/11 games. Your existing DirectX preferences are kept. Windows 11 only."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": true,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 22000,
+      "ops": [{ "op": "dx_global_setting", "key": "SwapEffectUpgradeEnable", "value": "1" }]
+    },
+    {
+      "id": "new_ultimate_power",
+      "category": "power",
+      "title": { "tr": "Ultimate Performance güç planı", "en": "Ultimate Performance power plan" },
+      "description": {
+        "tr": "Gizli Ultimate Performance güç planını oluşturur ve etkinleştirir; işlemci beklemeye geçmez, oyunlarda daha tutarlı performans verir. Dizüstüde pil tüketimi artar, bu yüzden tek tuşla uygulamaya dahil edilmez. Geri alınca önceki plana dönülür.",
+        "en": "Creates and activates the hidden Ultimate Performance power plan so the CPU stays ready and games run more consistently. It drains a laptop battery faster, so it is offered on laptops but kept out of the one-click button. Reverting switches back to your previous plan."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": true,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [{ "op": "power_scheme_duplicate_activate", "source": "e9a42b02-d5df-448d-aa00-03f14749eb61" }]
+    },
+    {
+      "id": "new_network_throttling",
+      "category": "network",
+      "title": { "tr": "Multimedya ağ kısıtlamasını kaldır", "en": "Remove multimedia network throttling" },
+      "description": {
+        "tr": "Windows, ses/video çalarken ağ trafiğini sınırlar. Bu ayar sınırı kaldırır; online oyunlarda ve indirmelerde daha az takılma sağlar.",
+        "en": "Windows limits network traffic while media is playing. This removes that limit for smoother online games and downloads."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": true,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+          "name": "NetworkThrottlingIndex",
+          "data": { "type": "dword", "value": 4294967295 }
+        }
+      ]
+    },
+    {
+      "id": "new_fth_off",
+      "category": "performance",
+      "title": { "tr": "Fault Tolerant Heap'i kapat", "en": "Turn off Fault Tolerant Heap" },
+      "description": {
+        "tr": "Daha önce çöken uygulamaları Windows'un yavaşlatmasını engeller. Oyunların bir kez çökünce sürekli yavaş çalışmasının önüne geçer.",
+        "en": "Stops Windows from slowing down apps that have crashed before, so a game that crashed once does not stay slow afterwards."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": true,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\FTH",
+          "name": "Enabled",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "new_copilot_recall_off",
+      "category": "privacy",
+      "title": { "tr": "Copilot ve Recall'u kapat", "en": "Turn off Copilot and Recall" },
+      "description": {
+        "tr": "Windows Copilot'u ve Recall'un yapay zekâ ile veri analizini politika ile kapatır. Gizliliğin için ayrı olarak açıp kapatabilirsin.",
+        "en": "Turns off Windows Copilot and Recall's AI data analysis through policy. A separate privacy switch you can enable or disable on your own."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": true,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Policies\\Microsoft\\Windows\\WindowsCopilot",
+          "name": "TurnOffWindowsCopilot",
+          "data": { "type": "dword", "value": 1 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsAI",
+          "name": "DisableAIDataAnalysis",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    }
+  ]
+}

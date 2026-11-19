@@ -1,0 +1,399 @@
+{
+  "tweaks": [
+    {
+      "id": "net_nic_power_saving_off",
+      "category": "network",
+      "title": {
+        "tr": "Ağ kartı güç tasarrufunu kapat",
+        "en": "Turn off network adapter power saving"
+      },
+      "description": {
+        "tr": "Ağ kartının güç tasarrufu özelliklerini kapatır: Energy Efficient Ethernet (boşta hattı uyutur ve uyanırken kısa bir gecikme ekler), paket biriktirme (yayın/çoklu yayın paketlerini toplayıp geç iletir; oyun trafiğine doğrudan etkisi yoktur) ve USB ağ adaptörlerinin boşta uyuması. Asıl fayda, kartın uykuya geçip uyanırken oluşan gecikme ve bağlantı kopmalarının ortadan kalkmasıdır. Yalnızca bu özellikleri destekleyen kartlar değiştirilir. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off adapter power-saving features: Energy Efficient Ethernet (puts the link to sleep when idle and adds a short delay when it wakes), packet coalescing (holds broadcast/multicast packets to deliver them in batches; it does not hold your game traffic directly) and idle suspend on USB network adapters. The main benefit is removing the wake-up delays and link drops caused by the adapter going to sleep. Only adapters that support these features are changed. Takes effect after a restart."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "laptop": false,
+      "ops": [
+        {
+          "op": "nic_property",
+          "keyword": "*EEE",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*PacketCoalescing",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*SelectiveSuspend",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "net_wake_off",
+      "category": "network",
+      "title": {
+        "tr": "Ağdan uyandırmayı kapat (Wake-on-LAN)",
+        "en": "Turn off wake from network (Wake-on-LAN)"
+      },
+      "description": {
+        "tr": "Ağ kartının bilgisayarı uykudan uyandırmasını ve bilgisayar uyurken ağdaki isteklere (ARP/NS) cevap vermesini kapatır. Bilgisayarın kendi kendine uyanmasını önler. Oyun sırasında ping'e etkisi yoktur. Wake-on-LAN ile bilgisayarını uzaktan açıyorsan bunu uygulama. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Stops the network adapter from waking the PC from sleep and from answering network requests (ARP/NS) while the PC sleeps. This prevents the PC from waking up on its own. It has no effect on ping while you play. Skip it if you turn your PC on remotely with Wake-on-LAN. Takes effect after a restart."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "nic_property",
+          "keyword": "*WakeOnMagicPacket",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*WakeOnPattern",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*PMARPOffload",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*PMNSOffload",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "net_lso_rsc_off",
+      "category": "network",
+      "title": {
+        "tr": "Paket birleştirmeyi kapat (LSO / RSC)",
+        "en": "Turn off packet batching (LSO / RSC)"
+      },
+      "description": {
+        "tr": "Ağ kartının giden büyük veriyi kendisi parçalamasını (LSO) ve gelen TCP paketlerini birleştirip toplu teslim etmesini (RSC) kapatır. RSC kapalıyken gelen TCP paketleri beklemeden tek tek iletilir; bu, TCP kullanan oyunlarda gecikme dalgalanmasını azaltabilir. UDP kullanan oyunların (çoğu rekabetçi oyun) trafiği etkilenmez. Yalnızca bu özellikleri destekleyen kartlar değiştirilir. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Stops the adapter from splitting large outgoing data itself (LSO) and from merging incoming TCP packets into batches (RSC). With RSC off, incoming TCP packets are delivered one by one without waiting, which can smooth out latency in TCP-based games. Traffic of UDP-based games (most competitive shooters) is not affected. Only adapters that support these features are changed. Takes effect after a restart."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Bu işler ağ kartından işlemciye geçer: büyük indirme ve yüklemelerde işlemci kullanımı artar, çok hızlı (gigabit ve üstü) bağlantılarda en yüksek hız düşebilir.",
+        "en": "This work moves from the adapter to the CPU: CPU use goes up during large downloads and uploads, and on very fast (gigabit and above) links the top speed can drop."
+      },
+      "ops": [
+        {
+          "op": "nic_property",
+          "keyword": "*LsoV2IPv4",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*LsoV2IPv6",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*RscIPv4",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "*RscIPv6",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "net_realtek_power_off",
+      "category": "network",
+      "title": {
+        "tr": "Realtek ağ kartı tasarruf modlarını kapat",
+        "en": "Turn off Realtek adapter power-saving modes"
+      },
+      "description": {
+        "tr": "Realtek ethernet kartlarına özel tasarruf modlarını kapatır: Green Ethernet, Power Saving Mode, Advanced EEE, Gigabit Lite (bağlantıyı 500 Mbps'e düşürür) ve Auto Disable Gigabit (gigabit'i kapatır). Kart tam hızda ve uyanık kalır. Yalnızca sürücüsü bu ayarları tanıyan (Realtek) kartlar değiştirilir; diğer kartlara dokunulmaz. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off the power-saving modes specific to Realtek Ethernet adapters: Green Ethernet, Power Saving Mode, Advanced EEE, Gigabit Lite (drops the link to 500 Mbps) and Auto Disable Gigabit (turns gigabit off). The adapter stays awake at full speed. Only adapters whose driver knows these settings (Realtek) are changed; other adapters are not touched. Takes effect after a restart."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Bunlar standart Windows ayarları değil, Realtek sürücüsüne özel adlar; sürücü sürümüne göre bazıları bulunmayabilir. Kart boştayken biraz daha fazla güç harcar (dizüstünde pil süresi kısalır).",
+        "en": "These are not standard Windows settings but Realtek driver-specific names; some may be missing depending on the driver version. The adapter uses a bit more power when idle (shorter battery life on laptops)."
+      },
+      "ops": [
+        {
+          "op": "nic_property",
+          "keyword": "EnableGreenEthernet",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "PowerSavingMode",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "AdvancedEEE",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "GigaLite",
+          "value": "0"
+        },
+        {
+          "op": "nic_property",
+          "keyword": "AutoDisableGigabit",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "id": "net_irq_affinity",
+      "category": "network",
+      "title": {
+        "tr": "Ağ kartı kesmelerini CPU 2'ye sabitle",
+        "en": "Pin network adapter interrupts to CPU 2"
+      },
+      "description": {
+        "tr": "Ağ kartının donanım kesmelerini (interrupt) Windows'un seçtiği çekirdek yerine her zaman üçüncü işlemci iş parçacığına (CPU 2) yönlendirir. Amaç, ağ işini sistem işlerinin yoğun olduğu CPU 0'dan uzak tutmaktır. Etkisi bilgisayara göre değişir; fark olup olmadığını LatencyMon gibi bir araçla ölçerek karar ver. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Routes the network adapter's hardware interrupts to the third CPU thread (CPU 2) instead of the core Windows picks. The idea is to keep network work away from CPU 0, where most system work runs. The effect differs from PC to PC; measure with a tool such as LatencyMon to see whether it helps. Takes effect after a restart."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Windows'un kesmeleri otomatik dağıtmasını devre dışı bırakır. Oyunun kendi iş parçacıkları da CPU 2'deyse gecikme artabilir; bazı bilgisayarlarda sonuç daha kötü olur.",
+        "en": "Overrides Windows' automatic interrupt placement. If the game's own threads also run on CPU 2, latency can get worse; on some PCs the result is worse than the default."
+      },
+      "ops": [
+        {
+          "op": "device_reg",
+          "class": "net",
+          "suffix": "Device Parameters\\Interrupt Management\\Affinity Policy",
+          "name": "DevicePolicy",
+          "data": {
+            "type": "dword",
+            "value": 4
+          }
+        },
+        {
+          "op": "device_reg",
+          "class": "net",
+          "suffix": "Device Parameters\\Interrupt Management\\Affinity Policy",
+          "name": "AssignmentSetOverride",
+          "data": {
+            "type": "binary",
+            "value": "0400000000000000"
+          }
+        }
+      ]
+    },
+    {
+      "id": "net_time_wait",
+      "category": "network",
+      "title": {
+        "tr": "Kapanan bağlantı portlarını daha hızlı boşalt",
+        "en": "Free closed connection ports faster"
+      },
+      "description": {
+        "tr": "Kapanan bir TCP bağlantısının portu Windows'ta varsayılan olarak 120 saniye bekletilir; bu ayar süreyi 32 saniyeye indirir. Çok sayıda bağlantıyı hızla açıp kapatan programlarda (indirme yöneticileri, torrent, sunucular) port tükenmesini önler. Ping'e veya oyun içi gecikmeye etkisi yoktur.",
+        "en": "Windows keeps the port of a closed TCP connection reserved for 120 seconds by default; this lowers that to 32 seconds. It prevents running out of ports in programs that open and close many connections quickly (download managers, torrents, servers). It has no effect on ping or in-game latency."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SYSTEM\\CurrentControlSet\\Services\\Tcpip\\Parameters",
+          "name": "TcpTimedWaitDelay",
+          "data": {
+            "type": "dword",
+            "value": 32
+          }
+        }
+      ]
+    },
+    {
+      "id": "net_ipv6_tunnels_off",
+      "category": "network",
+      "title": {
+        "tr": "IPv6 tünel bağlantılarını kapat (Teredo, 6to4, ISATAP)",
+        "en": "Turn off IPv6 tunnels (Teredo, 6to4, ISATAP)"
+      },
+      "description": {
+        "tr": "IPv6'yı IPv4 üzerinden taşıyan eski tünel bağdaştırıcılarını grup ilkesiyle kapatır. Arka planda tünel kurma denemeleri ve gereksiz sanal bağdaştırıcılar ortadan kalkar. Normal IPv6 bağlantın etkilenmez. Windows 6to4 ve ISATAP'ı çoğunlukla zaten kapalı tutar; asıl değişen Teredo'dur. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Turns off, through group policy, the old tunnel adapters that carry IPv6 over IPv4. Background tunnel attempts and extra virtual adapters go away. Your regular IPv6 connection is not affected. Windows usually keeps 6to4 and ISATAP off already; the main change is Teredo. Takes effect after a restart."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Xbox uygulaması ve Xbox ağını kullanan bazı oyunlar (parti sohbeti, eşler arası çok oyunculu) Teredo'ya ihtiyaç duyar; kapatınca 'Teredo kullanılamıyor' hatası ve bağlantı sorunları görülebilir.",
+        "en": "The Xbox app and some games that use the Xbox network (party chat, peer-to-peer multiplayer) need Teredo; with it off you may see 'Teredo is unable to qualify' errors and connection problems."
+      },
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\TCPIP\\v6Transition",
+          "name": "Teredo_State",
+          "data": {
+            "type": "sz",
+            "value": "Disabled"
+          }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\TCPIP\\v6Transition",
+          "name": "6to4_State",
+          "data": {
+            "type": "sz",
+            "value": "Disabled"
+          }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Policies\\Microsoft\\Windows\\TCPIP\\v6Transition",
+          "name": "ISATAP_State",
+          "data": {
+            "type": "sz",
+            "value": "Disabled"
+          }
+        }
+      ]
+    },
+    {
+      "id": "net_ipv6_off",
+      "category": "network",
+      "title": {
+        "tr": "IPv6'yı kapat veya IPv4'ü öne al",
+        "en": "Turn off IPv6 or prefer IPv4"
+      },
+      "description": {
+        "tr": "Windows'un IPv6 kullanımını değiştirir. 'IPv4'ü tercih et' IPv6'yı açık bırakır ama bağlantılarda önce IPv4'ü dener (Microsoft'un önerdiği yöntem). 'IPv6'yı kapat' tünel dahil bütün IPv6 bağdaştırıcılarını devre dışı bırakır. Yalnızca IPv6 bağlantısı sorun çıkarıyorsa (yüksek ping, bağlanamama) kullan. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "Changes how Windows uses IPv6. 'Prefer IPv4' leaves IPv6 on but tries IPv4 first for connections (the method Microsoft recommends). 'Turn off IPv6' disables every IPv6 adapter, tunnels included. Use it only if your IPv6 connection causes problems (high ping, failing to connect). Takes effect after a restart."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "caution_note": {
+        "tr": "Microsoft IPv6'nın tamamen kapatılmasını desteklemez: bazı Windows bileşenleri, ev grubu/yerel ağ keşfi ve yalnızca IPv6 sunan internet sağlayıcıları ya da oyun sunucuları çalışmayabilir.",
+        "en": "Microsoft does not support turning IPv6 off completely: some Windows components, local network discovery and ISPs or game servers that offer only IPv6 may stop working."
+      },
+      "options": [
+        {
+          "id": "prefer_ipv4",
+          "label": {
+            "tr": "IPv4'ü tercih et (IPv6 açık kalır)",
+            "en": "Prefer IPv4 (IPv6 stays on)"
+          },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+              "name": "DisabledComponents",
+              "data": {
+                "type": "dword",
+                "value": 32
+              }
+            }
+          ]
+        },
+        {
+          "id": "disable",
+          "label": {
+            "tr": "IPv6'yı tamamen kapat",
+            "en": "Turn off IPv6 completely"
+          },
+          "ops": [
+            {
+              "op": "reg_set",
+              "hive": "hklm",
+              "path": "SYSTEM\\CurrentControlSet\\Services\\Tcpip6\\Parameters",
+              "name": "DisabledComponents",
+              "data": {
+                "type": "dword",
+                "value": 255
+              }
+            }
+          ]
+        }
+      ],
+      "default_option": "prefer_ipv4"
+    },
+    {
+      "id": "net_wifi_services_restore",
+      "category": "network",
+      "title": {
+        "tr": "Wi-Fi servislerini onar",
+        "en": "Repair Wi-Fi services"
+      },
+      "description": {
+        "tr": "Başka bir tweak aracı Wi-Fi'yi bozduysa (kablosuz ağlar görünmüyorsa) Wi-Fi için gereken servisleri Windows'un varsayılan başlatma türüne döndürür: Windows Bağlantı Yöneticisi ve WLAN Otomatik Yapılandırma otomatik, Native WiFi sürücüsü isteğe bağlı. Wi-Fi'n zaten çalışıyorsa bir şey değişmez. Yeniden başlattıktan sonra geçerli olur.",
+        "en": "If another tweak tool broke Wi-Fi (wireless networks no longer show up), this puts the services Wi-Fi needs back to their Windows default start types: Windows Connection Manager and WLAN AutoConfig automatic, the Native WiFi driver on demand. If your Wi-Fi already works, nothing changes. Takes effect after a restart."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "required",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "service_start",
+          "name": "Wcmsvc",
+          "start": 2
+        },
+        {
+          "op": "service_start",
+          "name": "WlanSvc",
+          "start": 2
+        },
+        {
+          "op": "service_start",
+          "name": "NativeWifiP",
+          "start": 3
+        }
+      ]
+    }
+  ]
+}

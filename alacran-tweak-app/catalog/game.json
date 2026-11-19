@@ -1,0 +1,244 @@
+{
+  "tweaks": [
+    {
+      "id": "game_mode_on",
+      "category": "game",
+      "title": { "tr": "Oyun Modu'nu aç", "en": "Turn on Game Mode" },
+      "description": {
+        "tr": "Ayarlar > Oyun > Oyun Modu'nu açar; Microsoft'un önerdiği ayardır. Bir oyun çalışırken Windows, Windows Update sürücü kurulumlarını ve yeniden başlatma bildirimlerini erteler ve oyuna öncelik verir. Çoğu bilgisayarda zaten açıktır; eski toplu dosyanın Windows 10 seçeneği bunu kapatıyordu.",
+        "en": "Turns on Settings > Gaming > Game Mode, the setting Microsoft recommends. While a game runs, Windows holds back Windows Update driver installs and restart notifications and gives the game priority. It is already on for most PCs; the old batch file's Windows 10 option turned it off."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Microsoft\\GameBar",
+          "name": "AutoGameModeEnabled",
+          "data": { "type": "dword", "value": 1 }
+        }
+      ]
+    },
+    {
+      "id": "game_dvr_off",
+      "category": "game",
+      "title": {
+        "tr": "Oyun kaydını (Game DVR) kapat",
+        "en": "Turn off game recording (Game DVR)"
+      },
+      "description": {
+        "tr": "Xbox Game Bar'ın oyun yakalamasını ve arka planda kaydını kapatır (AppCaptureEnabled = 0, GameDVR_Enabled = 0). Arka plan kaydı varsayılan olarak kapalıdır; açıksa ekran kartının video kodlayıcısını kullanır ve biraz FPS'e mal olur. Game Bar paneli (Win+G) açılmaya devam eder, ancak geri alana kadar Game Bar ile ekran görüntüsü ve klip kaydı alınamaz. Diğer kayıt programları (OBS, NVIDIA/AMD kayıt) etkilenmez.",
+        "en": "Turns off Xbox Game Bar game capture and background recording (AppCaptureEnabled = 0, GameDVR_Enabled = 0). Background recording is off by default; if it is on, it uses the graphics card's video encoder and costs some FPS. The Game Bar panel (Win+G) still opens, but Game Bar screenshots and clips do not work until you revert it. Other recording software (OBS, NVIDIA/AMD recording) is not affected."
+      },
+      "risk": "safe",
+      "in_one_click": true,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "Software\\Microsoft\\Windows\\CurrentVersion\\GameDVR",
+          "name": "AppCaptureEnabled",
+          "data": { "type": "dword", "value": 0 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "System\\GameConfigStore",
+          "name": "GameDVR_Enabled",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "game_fso_off",
+      "category": "game",
+      "title": {
+        "tr": "Tam ekran optimizasyonlarını kapat",
+        "en": "Turn off fullscreen optimizations"
+      },
+      "description": {
+        "tr": "Tüm oyunlar için tam ekran optimizasyonlarını kapatır; özel (exclusive) tam ekran kullanan DirectX oyunları yeniden gerçek özel tam ekrana geçer. Bazı eski DirectX 9/11 oyunlarında kare zamanlaması düzelebilir ve gecikme biraz azalabilir. Etkisi tartışmalıdır: birçok oyunda ölçülebilir fark yoktur ve Windows 11'de genellikle hiçbir şey değişmez. Oturumu kapatıp açtıktan sonra geçerli olur.",
+        "en": "Turns off fullscreen optimizations for all games, so DirectX games that ask for exclusive fullscreen get real exclusive fullscreen again. Some older DirectX 9/11 games can get better frame pacing and slightly lower latency. The effect is disputed: many games show no measurable difference, and on Windows 11 it usually changes nothing. Takes effect after you sign out and back in."
+      },
+      "caution_note": {
+        "tr": "Alt+Tab yavaşlar ve ekran kısa süre kararabilir; Game Bar, ses düzeyi ve bildirim kaplamaları oyunun üstünde görünmeyebilir; Auto HDR bu oyunlarda çalışmayabilir. Tek tek oyunlar için bu ayarı exe dosyasının Özellikler > Uyumluluk sekmesinden de değiştirebilirsin.",
+        "en": "Alt+Tab gets slower and the screen can go black briefly; Game Bar, volume and notification overlays may not show over the game; Auto HDR may not work in those games. You can also change this per game in the exe's Properties > Compatibility tab."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "System\\GameConfigStore",
+          "name": "GameDVR_FSEBehaviorMode",
+          "data": { "type": "dword", "value": 2 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "System\\GameConfigStore",
+          "name": "GameDVR_FSEBehavior",
+          "data": { "type": "dword", "value": 2 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "System\\GameConfigStore",
+          "name": "GameDVR_HonorUserFSEBehaviorMode",
+          "data": { "type": "dword", "value": 1 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "System\\GameConfigStore",
+          "name": "GameDVR_DXGIHonorFSEWindowsCompatible",
+          "data": { "type": "dword", "value": 1 }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hkcu",
+          "path": "System\\GameConfigStore",
+          "name": "GameDVR_EFSEFeatureFlags",
+          "data": { "type": "dword", "value": 0 }
+        }
+      ]
+    },
+    {
+      "id": "game_mmcss_games_priority",
+      "category": "game",
+      "title": {
+        "tr": "MMCSS 'Games' görev önceliğini yükselt",
+        "en": "Raise the MMCSS 'Games' task priority"
+      },
+      "description": {
+        "tr": "Multimedya Sınıf Zamanlayıcısı'nın (MMCSS) 'Games' görevinde 'Scheduling Category' ve 'SFIO Priority' değerlerini 'High' yapar (varsayılan: Medium / Normal). Yalnızca iş parçacıklarını MMCSS'e 'Games' görevi olarak kaydeden oyunları etkiler; birçok oyun bunu yapmaz, bu yüzden etkisi oyuna göre değişir ve çoğu zaman küçüktür.",
+        "en": "Sets 'Scheduling Category' and 'SFIO Priority' of the Multimedia Class Scheduler (MMCSS) 'Games' task to 'High' (defaults: Medium / Normal). It only affects games that register their threads with MMCSS as the 'Games' task; many games do not, so the effect depends on the game and is often small."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+          "name": "Scheduling Category",
+          "data": { "type": "sz", "value": "High" }
+        },
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile\\Tasks\\Games",
+          "name": "SFIO Priority",
+          "data": { "type": "sz", "value": "High" }
+        }
+      ]
+    },
+    {
+      "id": "game_system_responsiveness",
+      "category": "game",
+      "title": {
+        "tr": "Arka plan için ayrılan işlemci payını azalt",
+        "en": "Reduce the CPU share reserved for background tasks"
+      },
+      "description": {
+        "tr": "MMCSS'in, multimedya iş parçacıkları çalışırken düşük öncelikli işlere ayırdığı işlemci payını %20'den %10'a indirir (SystemResponsiveness = 10). Windows, 10'un altındaki değerleri varsayılan 20 olarak kabul eder; bu yüzden toplu dosyanın yazdığı 0 hiçbir şey değiştirmiyordu, 10 kabul edilen en düşük değerdir. Etkisi MMCSS kullanan programlarla (ses, bazı oyunlar) sınırlıdır.",
+        "en": "Lowers the CPU share MMCSS reserves for low-priority work while multimedia threads run from 20% to 10% (SystemResponsiveness = 10). Windows treats values below 10 as the default 20, so the batch file's 0 changed nothing; 10 is the lowest value that is honoured. The effect is limited to programs that use MMCSS (audio, some games)."
+      },
+      "risk": "safe",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "recommended",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Multimedia\\SystemProfile",
+          "name": "SystemResponsiveness",
+          "data": { "type": "dword", "value": 10 }
+        }
+      ]
+    },
+    {
+      "id": "game_fortnite_priority",
+      "category": "game",
+      "title": {
+        "tr": "Fortnite'ı yüksek öncelikte başlat",
+        "en": "Start Fortnite at high priority"
+      },
+      "description": {
+        "tr": "Windows'a, Fortnite (FortniteClient-Win64-Shipping.exe) her başladığında işlemi 'Yüksek' işlemci önceliğiyle başlatmasını söyler (Image File Execution Options > PerfOptions > CpuPriorityClass = 3). Oyun dosyalarına dokunmaz. Arka planda çok iş çalışırken FPS düşüşlerini azaltabilir; boş bir sistemde fark küçüktür.",
+        "en": "Tells Windows to start Fortnite (FortniteClient-Win64-Shipping.exe) with 'High' CPU priority every time (Image File Execution Options > PerfOptions > CpuPriorityClass = 3). Game files are not touched. It can reduce FPS drops while a lot runs in the background; on an otherwise idle system the difference is small."
+      },
+      "caution_note": {
+        "tr": "Yüksek öncelikte Windows oyunu diğer her şeyin önüne koyar. Az çekirdekli işlemcilerde sesli sohbet, yayın/kayıt programları veya müzik takılabilir.",
+        "en": "At high priority Windows puts the game ahead of everything else. On CPUs with few cores, voice chat, streaming/recording software or music can stutter."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\FortniteClient-Win64-Shipping.exe\\PerfOptions",
+          "name": "CpuPriorityClass",
+          "data": { "type": "dword", "value": 3 }
+        }
+      ]
+    },
+    {
+      "id": "game_valorant_priority",
+      "category": "game",
+      "title": {
+        "tr": "Valorant'ı yüksek öncelikte başlat",
+        "en": "Start Valorant at high priority"
+      },
+      "description": {
+        "tr": "Windows'a, Valorant oyun işlemi (VALORANT-Win64-Shipping.exe) her başladığında onu 'Yüksek' işlemci önceliğiyle başlatmasını söyler (Image File Execution Options > PerfOptions > CpuPriorityClass = 3). Oyun dosyalarına dokunmaz. Arka planda çok iş çalışırken FPS düşüşlerini azaltabilir; boş bir sistemde fark küçüktür.",
+        "en": "Tells Windows to start the Valorant game process (VALORANT-Win64-Shipping.exe) with 'High' CPU priority every time (Image File Execution Options > PerfOptions > CpuPriorityClass = 3). Game files are not touched. It can reduce FPS drops while a lot runs in the background; on an otherwise idle system the difference is small."
+      },
+      "caution_note": {
+        "tr": "Yüksek öncelikte Windows oyunu diğer her şeyin önüne koyar. Az çekirdekli işlemcilerde sesli sohbet, yayın/kayıt programları veya müzik takılabilir.",
+        "en": "At high priority Windows puts the game ahead of everything else. On CPUs with few cores, voice chat, streaming/recording software or music can stutter."
+      },
+      "risk": "caution",
+      "in_one_click": false,
+      "new": false,
+      "reboot": "none",
+      "one_way": false,
+      "min_build": 19044,
+      "ops": [
+        {
+          "op": "reg_set",
+          "hive": "hklm",
+          "path": "SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion\\Image File Execution Options\\VALORANT-Win64-Shipping.exe\\PerfOptions",
+          "name": "CpuPriorityClass",
+          "data": { "type": "dword", "value": 3 }
+        }
+      ]
+    }
+  ]
+}
